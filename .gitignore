@@ -26,3 +26,6 @@ yarn-error.log*
 
 # todos
 TODO
+
+#eslint
+client/.eslintrc.json
