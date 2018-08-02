@@ -5,16 +5,14 @@ import { play, pause } from '../actions';
 import plyr from 'plyr';
 import './Player.css';
 
-var audio;
+import ReactDOM from 'react-dom';
+
 class Player extends Component {
 	componentDidMount() {
-		audio = document.getElementById('audio-player');
+		new plyr('#audio-player');
 	}
-
 	componentDidUpdate() {
-		new plyr('#audio-player', {
-			duration: this.props.player.duration
-		});
+		var audio = document.getElementById('audio-player');
 		if (this.props.player.isPlaying) {
 			audio.play();
 		} else {
@@ -25,21 +23,20 @@ class Player extends Component {
 		if (this.props.player.isPlaying !== nextProps.player.isPlaying) {
 			return true;
 		} else {
-			return false;// no re-rendering is required
+			// no re-rendering is required
+			return false;
 		}
 	}
 
+
 	render() {
 		return (
-			<div>
-				<nav className='navbar fixed-bottom'>
-					{this.props.player
-						? <audio id='audio-player' onPlay={() => this.props.play(this.props.player.videoId, this.props.player.duration)}
-							onPause={this.props.pause} controls src={`http://localhost:3000/api/play/${this.props.player.videoId}`}></audio>
-						: null
-					}
-				</nav>
-			</div>
+			<audio
+				id='audio-player'
+				src={`/api/play/${this.props.player.videoId}`}
+				onPlay={() => this.props.play(this.props.player.videoId)}
+				onPause={() => this.props.pause()}
+			></audio>
 		);
 	}
 }
@@ -53,8 +50,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		play: (videoId, duration) => {
-			dispatch(play(videoId, duration));
+		play: (videoId) => {
+			dispatch(play(videoId));
 		},
 		pause: () => {
 			dispatch(pause());

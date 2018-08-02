@@ -8,11 +8,21 @@ app.use(express.static(__dirname + "/public")); // eslint-disable-line
 
 // SOURCE URL FOR AUDIO
 app.get("/api/play/:videoId", function (req, res) {
-	// Secure this route to prevent unauthorized access and/or convert to a post route
-	// Find a better name for this route
 	let requestUrl = "http://youtube.com/watch?v=" + req.params.videoId;
 	try {
-		stream(requestUrl).pipe(res);
+		apiRequest.getDuration(req.params.videoId).then(function (duration) {
+			// calculate length in bytes, (((bitrate * (lengthInSeconds - minusFiveThisIsAnEstimateBecauseItSeemsToBeOffByThis)) / bitsToBytes) * kiloBytesToBytes)
+			var durationInBytes = (((128 * (duration - 4)) / 8) * 1024);
+			res.writeHead(200, {
+				'Content-Length': durationInBytes,
+				'Transfer-Encoding': 'chuncked',
+			});
+			stream(requestUrl).pipe(res);
+		}).catch(function (err) {
+			if (err) {
+				// do nothing
+			}
+		});
 	} catch (exception) {
 		res.status(500).send(exception);
 	}

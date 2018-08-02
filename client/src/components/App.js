@@ -1,15 +1,17 @@
 /* eslint-disable no-unused-vars */
 import React, { Component } from 'react';
-import Player from './Player';
 import Search from './Search';
 import Results from './Results';
+import Player from './Player';
 
 class App extends Component {
 	render() {
 		return (
-			<div className='App'>
-				<Search />
-				<Results />
+			<div>
+				<div className='App container'>
+					<Search />
+					<Results />
+				</div>
 				<Player />
 			</div>
 		);

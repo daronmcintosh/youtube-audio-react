@@ -8,14 +8,11 @@ export const addToQueue = videoId => ({
 	videoId: videoId
 });
 
-export const play = (videoId, duration) => ({
+export const play = (videoId) => ({
 	type: 'PLAY',
-	isPlaying: true,
-	videoId: videoId,
-	duration: duration
+	videoId: videoId
 });
 
 export const pause = () => ({
 	type: 'PAUSE',
-	isPlaying: true,
 });
