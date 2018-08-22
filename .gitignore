@@ -1,6 +1,9 @@
 # dependencies
 node_modules/
 
+# build folder
+client/build
+
 # dotenv environment variables file
 backend/.env
 

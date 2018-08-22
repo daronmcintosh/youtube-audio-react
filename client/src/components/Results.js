@@ -2,8 +2,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { addToQueue, play, pause } from '../actions';
-import './Results.css';
+import styled from 'styled-components';
 
+const SearchResults = styled.div`
+	margin-top: 70px;
+`;
 class Results extends Component {
 	constructor(props) {
 		super(props);
@@ -15,11 +18,11 @@ class Results extends Component {
 	}
 	render() {
 		return (
-			<div className="list-group">
+			<SearchResults>
 				{this.props.searchResults.map(result =>
-					<a key={result.id} className="list-group-item list-group-item-action" onClick={(e) => this.handleLinkClick(result.id, e)}>{result.title}</a>
+					<a key={result.id} className="" onClick={(e) => this.handleLinkClick(result.id, e)}>{result.title}</a>
 				)}
-			</div>
+			</SearchResults>
 		);
 	}
 }
