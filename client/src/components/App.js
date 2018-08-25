@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import Search from './Search';
 import Results from './Results';
+import Home from './Home';
 import Player from './Player';
 import styled from 'styled-components';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -17,7 +18,6 @@ class App extends Component {
 		return (
 			<AppWrapper className='App'>
 				<Search />
-				<Results />
 				<Player />
 			</AppWrapper>
 		);

@@ -1,6 +1,6 @@
 const searchResults = (state = [], action) => {
 	switch (action.type) {
-	case 'ADD_RESULTS':
+	case 'ADD_SEARCH_RESULTS':
 		return [
 			...action.searchResults
 		];

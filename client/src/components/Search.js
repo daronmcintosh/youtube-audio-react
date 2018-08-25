@@ -1,9 +1,8 @@
-/* eslint-disable no-unused-vars */
 import React, { Component } from 'react';
-import { addSearchResults } from '../actions';
-import { connect } from 'react-redux';
 import styled from 'styled-components';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import Home from './Home';
+import SearchForm from './SearchForm';
 
 const SearchNav = styled.nav`
 	display: flex;
@@ -15,59 +14,34 @@ const SearchNav = styled.nav`
 	width: 100%;
 	padding: 10px;
 `;
-const SearchForm = styled.form`
-	margin: 0 auto;
-`;
-const SearchInput = styled.input`
-	height: 2.5rem;
-	border-radius: .3rem;
-	padding: 5px;
-	margin-right: 4px;
-`;
-const SearchButton = styled.button`
-	height: 2.5rem;
-	width: 2.5rem;
-	border-radius: .3rem;
-	background: none;
+
+const HomeButton = styled(Link)`
 	color: #FFFFFF;
-	/* border: none; */
+	text-decoration: none;
+	display: inline-block;
+    padding-top: .3125rem;
+    padding-bottom: .3125rem;
+    margin-right: 1rem;
+    font-size: 1.25rem;
+    line-height: inherit;
+    white-space: nowrap;
 `;
 
 class Search extends Component {
-	constructor(props) {
-		super(props);
-		this.state = { searchTerm: '' };
-		this.handleSubmit = this.handleSubmit.bind(this);
-		this.handleChange = this.handleChange.bind(this);
-	}
-	handleSubmit(event) {
-		event.preventDefault();
-		fetch(`/results?searchQuery=${this.state.searchTerm}`)
-			.then(res => res.json())
-			// .then(data => console.log(data));
-			.then(data => this.props.addSearchResults(data));
-	}
-	handleChange(event) {
-		this.setState({ searchTerm: event.target.value });
-	}
 	render() {
 		return (
-			<SearchNav className=''>
-				<SearchForm className='' onSubmit={this.handleSubmit}>
-					<SearchInput className='' type='search' placeholder='Search' aria-label='Search' value={this.state.searchTerm} onChange={this.handleChange} />
-					<SearchButton type='submit'><FontAwesomeIcon icon='search' size='lg' /></SearchButton>
-				</SearchForm>
-			</SearchNav>
+			<Router>
+				<div>
+					<SearchNav className='search-nav'>
+						<HomeButton to='/'>Youtube Audio</HomeButton>
+						<SearchForm />
+					</SearchNav>
+					<Route exact path='/' component={Home} />
+				</div>
+			</Router>
+
 		);
 	}
 }
 
-const mapDispatchToProps = (dispatch) => {
-	return {
-		addSearchResults: (searchResults) => {
-			dispatch(addSearchResults(searchResults));
-		}
-	};
-};
-
-export default connect(null, mapDispatchToProps)(Search);
+export default Search;

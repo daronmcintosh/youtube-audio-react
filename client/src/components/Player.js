@@ -100,7 +100,7 @@ class Player extends Component {
 				</SongInfo>
 				<PlayerControls className='player-controls'>
 					<FontAwesomeIcon icon='step-backward' size='2x' />
-					<FontAwesomeIcon icon='play' size='2x' fixedWidth='true' />
+					<FontAwesomeIcon icon='play' size='2x' fixedWidth />
 					<FontAwesomeIcon icon='step-forward' size='2x' />
 				</PlayerControls>
 				<audio

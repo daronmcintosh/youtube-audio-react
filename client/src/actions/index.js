@@ -1,5 +1,5 @@
 export const addSearchResults = results => ({
-	type: 'ADD_RESULTS',
+	type: 'ADD_SEARCH_RESULTS',
 	searchResults: results
 });
 
