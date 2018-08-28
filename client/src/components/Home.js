@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { addToQueue, play, pause } from '../actions';
+import { addToQueue, play, pause, updateNowPlayingTitle } from '../actions';
 
 const TrendingVideos = styled.div`
 	margin-top: 70px;
@@ -12,8 +12,9 @@ class Home extends Component {
 		super(props);
 		this.state = { trendingVideos: [] };
 	}
-	handleLinkClick(videoId, event) {
+	handleLinkClick(videoId, title, event) {
 		this.props.play(videoId);
+		this.props.updateNowPlayingTitle(title);
 		// this.props.addToQueue(videoId);
 	}
 	componentDidMount() {
@@ -25,7 +26,7 @@ class Home extends Component {
 		return (
 			<TrendingVideos>
 				{this.state.trendingVideos.map(video =>
-					<a key={video.id} className="" onClick={(e) => this.handleLinkClick(video.id, e)}>{video.title}</a>
+					<a key={video.id} className="" onClick={(e) => this.handleLinkClick(video.id, video.title, e)}>{video.title}</a>
 				)}
 			</TrendingVideos>
 		);
@@ -42,6 +43,9 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		pause: () => {
 			dispatch(pause());
+		},
+		updateNowPlayingTitle: (title) => {
+			dispatch(updateNowPlayingTitle(title));
 		}
 	};
 };

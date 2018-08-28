@@ -14,5 +14,10 @@ export const play = (videoId) => ({
 });
 
 export const pause = () => ({
-	type: 'PAUSE',
+	type: 'PAUSE'
+});
+
+export const updateNowPlayingTitle = (title) => ({
+	type: 'UPDATE_NOW_PLAYING_TITLE',
+	title: title
 });

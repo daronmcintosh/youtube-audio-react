@@ -1,7 +1,6 @@
-/* eslint-disable no-unused-vars */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addToQueue, play, pause } from '../actions';
+import { addToQueue, play, pause, updateNowPlayingTitle } from '../actions';
 import styled from 'styled-components';
 
 const SearchResults = styled.div`
@@ -12,15 +11,16 @@ class Results extends Component {
 		super(props);
 		this.handleLinkClick = this.handleLinkClick.bind(this);
 	}
-	handleLinkClick(videoId, event) {
+	handleLinkClick(videoId, title, event) {
 		this.props.play(videoId);
+		this.props.updateNowPlayingTitle(title);
 		// this.props.addToQueue(videoId);
 	}
 	render() {
 		return (
 			<SearchResults>
 				{this.props.searchResults.map(result =>
-					<a key={result.id} className="" onClick={(e) => this.handleLinkClick(result.id, e)}>{result.title}</a>
+					<a key={result.id} className="" onClick={(e) => this.handleLinkClick(result.id, result.title, e)}>{result.title}</a>
 				)}
 			</SearchResults>
 		);
@@ -43,6 +43,9 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		pause: () => {
 			dispatch(pause());
+		},
+		updateNowPlayingTitle: (title) => {
+			dispatch(updateNowPlayingTitle(title));
 		}
 	};
 };

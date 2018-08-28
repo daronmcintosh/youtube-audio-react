@@ -4,7 +4,7 @@ const apiRequest = require("./apiRequest");
 
 const app = express();
 
-app.use(express.static(__dirname + "/public")); // eslint-disable-line
+app.use(express.static(__dirname + "/public"));
 
 // SOURCE URL FOR AUDIO
 app.get("/api/play/:videoId", (req, res) => {

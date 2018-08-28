@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { play, pause } from '../actions';
@@ -96,7 +95,7 @@ class Player extends Component {
 		return (
 			<PlayerContainer className='player-container'>
 				<SongInfo className='song-info'>
-					<SongTitle className='song-title'>Song Title - Song Artist</SongTitle>
+					<SongTitle className='song-title'>{this.props.player.title}</SongTitle>
 				</SongInfo>
 				<PlayerControls className='player-controls'>
 					<FontAwesomeIcon icon='step-backward' size='2x' />

@@ -5,7 +5,7 @@ const moment = require("moment");
 // initialize the Youtube API library
 const youtube = google.youtube({
 	version: "v3",
-	auth: process.env.API_KEY // eslint-disable-line
+	auth: process.env.API_KEY
 });
 
 async function buildSearch(query) {
