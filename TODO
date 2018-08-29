@@ -1,9 +1,8 @@
 youtube-audio-react:
   ✔ use redux to manage the state(playlist, queuing, singles etc) @done(18-08-02 01:06)
-  ☐ use componentDidMount to make sure a route always renders what it is suppose to eg: results?searchQuery=hello
-  ☐ use redux to determine what is rendered in the main body, etc, search, channel(videos or playlists)
+  ✔ use componentDidMount to make sure a route always renders what it is suppose to eg: results?searchQuery=hello @done(18-08-29 14:12)
+  ✘ use redux to determine what is rendered in the main body, etc, search, channel(videos or playlists) @cancelled(18-08-29 14:19)
+  ✔ remove all eslint-disable @done(18-08-29 14:19)
+  ✔ add readme to root and backend then edit client readme @done(18-08-29 14:20)
   ☐ use es6 wherever possible
-  ☐ remove all eslint-disable
-  ☐ make it look pretty
-  ☐ add readme to root and backend then edit client readme
   ☐ fix this:Uncaught (in promise) DOMException: The play() request was interrupted by a new load request. It happens when you skip a track while the current is still loading

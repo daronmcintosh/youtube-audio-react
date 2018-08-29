@@ -4,10 +4,21 @@ import { connect } from 'react-redux';
 import { addToQueue, play, pause, updateNowPlayingTitle } from '../actions';
 
 const TrendingVideosWrapper = styled.div`
+	width: 50%;
+	margin: 0 auto;
 	margin-top: 70px;
 `;
 
-const TrendingVideo = styled.div`
+const TrendingVideo = styled.a`
+	display: block;
+`;
+
+const TrendingVideoImg = styled.img`
+	width: 70px;
+	height: 70px;
+`;
+
+const TrendingVideoTitle = styled.span`
 `;
 
 class Home extends Component {
@@ -27,10 +38,11 @@ class Home extends Component {
 	}
 	render() {
 		return (
-			<TrendingVideosWrapper>
+			<TrendingVideosWrapper className='trending-videos-wrapper'>
 				{this.state.trendingVideos.map(video =>
-					<TrendingVideo>
-						<a key={video.id} className="" onClick={(e) => this.handleLinkClick(video.id, video.title, e)}>{video.title}</a>
+					<TrendingVideo key={video.id} className='trending-video' onClick={(e) => this.handleLinkClick(video.id, video.title, e)}>
+						<TrendingVideoImg src={video.imgSrc}/>
+						<TrendingVideoTitle>{video.title}</TrendingVideoTitle>
 					</TrendingVideo>
 				)}
 			</TrendingVideosWrapper>
