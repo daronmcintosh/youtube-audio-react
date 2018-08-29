@@ -6,6 +6,9 @@ import styled from 'styled-components';
 const SearchResults = styled.div`
 	margin-top: 70px;
 `;
+
+const SearchResult = styled.div`
+`;
 class Results extends Component {
 	constructor(props) {
 		super(props);
@@ -20,7 +23,9 @@ class Results extends Component {
 		return (
 			<SearchResults>
 				{this.props.searchResults.map(result =>
-					<a key={result.id} className="" onClick={(e) => this.handleLinkClick(result.id, result.title, e)}>{result.title}</a>
+					<SearchResult>
+						<a key={result.id} className="" onClick={(e) => this.handleLinkClick(result.id, result.title, e)}>{result.title}</a>
+					</SearchResult>
 				)}
 			</SearchResults>
 		);

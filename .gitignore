@@ -8,10 +8,10 @@ client/build
 backend/.env
 
 # todos
-TODO
+#TODO
 
 #eslint
-client/.eslintrc.json
+#client/.eslintrc.json
 
 #vscode
 .vscode

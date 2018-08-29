@@ -3,8 +3,11 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { addToQueue, play, pause, updateNowPlayingTitle } from '../actions';
 
-const TrendingVideos = styled.div`
+const TrendingVideosWrapper = styled.div`
 	margin-top: 70px;
+`;
+
+const TrendingVideo = styled.div`
 `;
 
 class Home extends Component {
@@ -24,11 +27,13 @@ class Home extends Component {
 	}
 	render() {
 		return (
-			<TrendingVideos>
+			<TrendingVideosWrapper>
 				{this.state.trendingVideos.map(video =>
-					<a key={video.id} className="" onClick={(e) => this.handleLinkClick(video.id, video.title, e)}>{video.title}</a>
+					<TrendingVideo>
+						<a key={video.id} className="" onClick={(e) => this.handleLinkClick(video.id, video.title, e)}>{video.title}</a>
+					</TrendingVideo>
 				)}
-			</TrendingVideos>
+			</TrendingVideosWrapper>
 		);
 	}
 }
