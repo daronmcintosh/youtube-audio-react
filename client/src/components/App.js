@@ -3,13 +3,21 @@ import Search from './Search';
 import Player from './Player';
 import Home from './Home';
 import Results from './Results';
-import styled from 'styled-components';
+import styled, { injectGlobal } from 'styled-components';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faSearch, faPlay, faStepForward, faStepBackward } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faPlay, faStepForward, faStepBackward, faHome } from '@fortawesome/free-solid-svg-icons';
 
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
-library.add(faSearch, faPlay, faStepBackward, faStepForward);
+library.add(faSearch, faPlay, faStepBackward, faStepForward, faHome);
+
+injectGlobal`
+	html,
+	body {
+		max-width: 100%;
+		overflow-x: hidden;
+	}
+`;
 
 const AppWrapper = styled.div`
 	font-family: 'Open Sans', sans-serif;

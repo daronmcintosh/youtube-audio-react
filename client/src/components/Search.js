@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import SearchForm from './SearchForm';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const SearchNav = styled.nav`
 	display: flex;
@@ -24,17 +25,30 @@ const HomeButton = styled(Link)`
     font-size: 1.25rem;
     line-height: inherit;
     white-space: nowrap;
+	@media (max-width: 768px) {
+		.search-nav-home-button-text {
+			display: none;
+		}
+	}
+`;
+
+const FontAwesomeIconWrapper = styled(FontAwesomeIcon)`
+	color: #FFFFFF;
+	display: none;
+	@media (max-width: 768px) {
+		display: block;
+	}
 `;
 
 class Search extends Component {
 	render() {
 		return (
-				<div>
-					<SearchNav className='search-nav'>
-						<HomeButton to='/'>Youtube Audio</HomeButton>
-						<SearchForm />
-					</SearchNav>
-				</div>
+			<div>
+				<SearchNav className='search-nav'>
+					<HomeButton to='/'><span className='search-nav-home-button-text'>Youtube Audio</span><FontAwesomeIconWrapper icon='home' size='2x' /></HomeButton>
+					<SearchForm />
+				</SearchNav>
+			</div>
 		);
 	}
 }

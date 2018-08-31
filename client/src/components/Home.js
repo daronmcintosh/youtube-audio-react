@@ -5,8 +5,8 @@ import { addToQueue, play, pause, updateNowPlayingTitle } from '../actions';
 
 const TrendingVideosWrapper = styled.ul`
 	width: 75%;
-	margin: 0 auto;
-	margin-top: 70px;
+	margin: 70px auto 120px auto;
+	justify-content: center;
 	display: flex;
 	flex-flow: row wrap;
 	list-style: none;
@@ -16,12 +16,23 @@ const TrendingVideo = styled.li`
 	width: 180px;
 	height: 140px;
 	margin-right: 20px;
-	margin-bottom: 40px;
+	margin-bottom: 60px;
+	cursor: pointer;
+
+	@media (max-width: 768px) {
+		width: 250px;
+	}
 `;
 
 const TrendingVideoImg = styled.img`
-	width: 180px;
 	height: 100px;
+
+	@media (max-width: 768px) {
+		width: 250px;
+		height: 140px;
+		margin-left: auto;
+		margin-right: auto;
+	}
 `;
 
 const TrendingVideoTitle = styled.div`
@@ -30,8 +41,6 @@ const TrendingVideoTitle = styled.div`
 	display: -webkit-box;
 	-webkit-box-orient: vertical;
 	-webkit-line-clamp: 2;
-	/* line-height: X;
-	max-height: X*N; */
 `;
 
 class Home extends Component {
@@ -54,8 +63,8 @@ class Home extends Component {
 			<TrendingVideosWrapper className='trending-videos-wrapper'>
 				{this.state.trendingVideos.map(video =>
 					<TrendingVideo key={video.id} className='trending-video' onClick={(e) => this.handleLinkClick(video.id, video.title, e)}>
-						<TrendingVideoImg src={video.imgSrc} />
-						<TrendingVideoTitle>{video.title}</TrendingVideoTitle>
+						<TrendingVideoImg className='trending-video-img' src={video.imgSrc} />
+						<TrendingVideoTitle className='trending-video-title'>{video.title}</TrendingVideoTitle>
 					</TrendingVideo>
 				)}
 			</TrendingVideosWrapper>
