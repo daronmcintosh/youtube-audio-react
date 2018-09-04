@@ -20,15 +20,17 @@ async function buildSearch(query) {
 	for (const item of items) {
 		let searchObj = {};
 		let kind = item.id.kind;
-		searchObj.kind = kind;
 		if (kind === 'youtube#video') {
 			searchObj.id = item.id.videoId;
+			searchObj.kind = 'video';
 		}
 		if (kind === 'youtube#playlist') {
 			searchObj.id = item.id.playlistId;
+			searchObj.kind = 'playlist';
 		}
 		if (kind === 'youtube#channel') {
 			searchObj.id = item.id.channelId;
+			searchObj.kind = 'channel';
 		}
 		searchObj.channelId = item.snippet.channelId;
 		searchObj.title = item.snippet.title;

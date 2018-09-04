@@ -4,6 +4,9 @@ youtube-audio-react:
   ✘ use redux to determine what is rendered in the main body, etc, search, channel(videos or playlists) @cancelled(18-08-29 14:19)
   ✔ remove all eslint-disable @done(18-08-29 14:19)
   ✔ add readme to root and backend then edit client readme @done(18-08-29 14:20)
-  ☐ there should be three break points, >992px - large, >768px - medium and >600px <768px - small. refine these
+  ✔ there should be three break points, >992px - large, >768px - medium and >600px <768px - small. refine these @done(18-09-03 10:37)
+  ✔ fix the "Country Trending Videos" div and hr so they start wherever the first video starts and ends where the last video ends @done(18-09-03 21:29)
+  ☐ Home component should get country trending videos by IP and set that country name in this component
+  ☐ add classname to everything
   ☐ use es6 wherever possible
   ☐ fix this:Uncaught (in promise) DOMException: The play() request was interrupted by a new load request. It happens when you skip a track while the current is still loading

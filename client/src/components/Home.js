@@ -3,36 +3,66 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { addToQueue, play, pause, updateNowPlayingTitle } from '../actions';
 
-const TrendingVideosWrapper = styled.ul`
-	width: 75%;
+const HomeWrapper = styled.div`
 	margin: 70px auto 120px auto;
-	justify-content: center;
-	display: flex;
-	flex-flow: row wrap;
-	list-style: none;
+
+	@media only screen and (min-width: 600px) {
+		max-width: 560px;
+	}
+
+	@media only screen and (min-width: 768px) {
+		max-width: 728px;
+	}
+
+	@media only screen and (min-width: 992px) {
+		max-width: 952px;
+	}
+
+	@media only screen and (min-width: 1200px) {
+		max-width: 80%;
+	}
 `;
 
-const TrendingVideo = styled.li`
-	width: 180px;
-	height: 140px;
-	margin-right: 20px;
-	margin-bottom: 60px;
+const CountryTrendingVideosTitle = styled.div`
+	font-weight: 700;
+`;
+
+const HorizontalRule = styled.hr`
+	border: 0;
+    height: 1px;
+    background: #333;
+    background-image: linear-gradient(to right, #ccc, #333, #ccc);
+	margin-bottom: 1rem;
+`;
+
+const TrendingVideosWrapper = styled.div`
+	display: flex;
+	justify-content: center;
+	flex-flow: row wrap;
+`;
+
+const TrendingVideo = styled.div`
+	width: 350px;
+	height: 200px;
+	margin-bottom: 70px;
 	cursor: pointer;
 
-	@media (max-width: 768px) {
+	@media only screen and (min-width: 600px) {
+		margin-right: 10px;
 		width: 250px;
+		height: 140px;
+	}
+
+	@media only screen and (min-width: 768px) {
+		width: 210px;
+		height: 120px;
 	}
 `;
 
 const TrendingVideoImg = styled.img`
-	height: 100px;
-
-	@media (max-width: 768px) {
-		width: 250px;
-		height: 140px;
-		margin-left: auto;
-		margin-right: auto;
-	}
+	width: 100%;
+	height: 100%;
+	border-radius: 5px;
 `;
 
 const TrendingVideoTitle = styled.div`
@@ -60,14 +90,18 @@ class Home extends Component {
 	}
 	render() {
 		return (
-			<TrendingVideosWrapper className='trending-videos-wrapper'>
-				{this.state.trendingVideos.map(video =>
-					<TrendingVideo key={video.id} className='trending-video' onClick={(e) => this.handleLinkClick(video.id, video.title, e)}>
-						<TrendingVideoImg className='trending-video-img' src={video.imgSrc} />
-						<TrendingVideoTitle className='trending-video-title'>{video.title}</TrendingVideoTitle>
-					</TrendingVideo>
-				)}
-			</TrendingVideosWrapper>
+			<HomeWrapper>
+				<CountryTrendingVideosTitle>United States Trending Videos</CountryTrendingVideosTitle>
+				<HorizontalRule />
+				<TrendingVideosWrapper className='trending-videos-wrapper'>
+					{this.state.trendingVideos.map(video =>
+						<TrendingVideo key={video.id} className='trending-video' onClick={(e) => this.handleLinkClick(video.id, video.title, e)}>
+							<TrendingVideoImg className='trending-video-img' src={video.imgSrc} />
+							<TrendingVideoTitle className='trending-video-title'>{video.title}</TrendingVideoTitle>
+						</TrendingVideo>
+					)}
+				</TrendingVideosWrapper>
+			</HomeWrapper>
 		);
 	}
 }

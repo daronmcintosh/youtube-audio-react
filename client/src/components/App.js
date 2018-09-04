@@ -16,12 +16,13 @@ injectGlobal`
 	body {
 		max-width: 100%;
 		overflow-x: hidden;
+		font-family: 'Open Sans', sans-serif;
 	}
 `;
 
 const AppWrapper = styled.div`
-	font-family: 'Open Sans', sans-serif;
 `;
+
 class App extends Component {
 	render() {
 		return (
