@@ -24,7 +24,8 @@ const HomeWrapper = styled.div`
 `;
 
 const CountryTrendingVideosTitle = styled.div`
-	font-weight: 700;
+	font-weight: 600;
+	font-size: 1.25rem;
 `;
 
 const HorizontalRule = styled.hr`

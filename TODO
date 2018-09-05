@@ -7,6 +7,9 @@ youtube-audio-react:
   ✔ there should be three break points, >992px - large, >768px - medium and >600px <768px - small. refine these @done(18-09-03 10:37)
   ✔ fix the "Country Trending Videos" div and hr so they start wherever the first video starts and ends where the last video ends @done(18-09-03 21:29)
   ☐ Home component should get country trending videos by IP and set that country name in this component
+  ☐ use same method used in Results component to get seemingly higher resolution images on main page
+  ☐ add logic to update player controls so they synced with the audio
+  ☐ add seeking to player
   ☐ add classname to everything
   ☐ use es6 wherever possible
   ☐ fix this:Uncaught (in promise) DOMException: The play() request was interrupted by a new load request. It happens when you skip a track while the current is still loading
