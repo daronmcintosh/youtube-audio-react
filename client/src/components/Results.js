@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { addToQueue, play, pause, updateNowPlayingTitle, addSearchResults } from '../actions';
 import styled, { css } from 'styled-components';
-import queryString from 'query-string';
 
 const ResultsWrapper = styled.div`
 	margin: 70px auto 120px auto;
@@ -113,7 +112,7 @@ const SearchResultDescription = styled.div`
 
 class Results extends Component {
 	componentDidMount() {
-		const searchQuery = queryString.parse(this.props.location.search).searchQuery;
+		const searchQuery = this.props.location.search.split('=')[1];
 		fetch(`/results?searchQuery=${searchQuery}`)
 			.then(res => res.json())
 			.then(data => this.props.addSearchResults(data));

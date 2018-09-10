@@ -97,7 +97,7 @@ app.get('/trending', (req, res) => {
 	});
 });
 
-let port = 3001;
+let port = process.env.PORT || 3001;
 app.listen(port, () => {
 	console.log(`Server started on ${port}`);
 });
