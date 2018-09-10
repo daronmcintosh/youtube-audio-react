@@ -5,11 +5,11 @@ import Home from './Home';
 import Results from './Results';
 import styled, { injectGlobal } from 'styled-components';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faSearch, faPlay, faStepForward, faStepBackward, faHome } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faPlay, faPause, faStepForward, faStepBackward, faHome } from '@fortawesome/free-solid-svg-icons';
 
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
-library.add(faSearch, faPlay, faStepBackward, faStepForward, faHome);
+library.add(faSearch, faPlay, faPause, faStepBackward, faStepForward, faHome);
 
 injectGlobal`
 	html,

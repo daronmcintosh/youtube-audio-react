@@ -70,12 +70,35 @@ const PlayerControls = styled.div`
 	color: #FFFFFF;
 `;
 
+const FontAwesomeButton = styled.button`
+	background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+`;
+
 class Player extends Component {
+	constructor(props) {
+		super(props);
+		this.handleClick = this.handleClick.bind(this);
+	}
+	handleClick() {
+		if (this.props.player.isPlaying) {
+			this.props.pause();
+		} else {
+			if (this.props.player.videoId !== 0) {
+				this.props.play(this.props.player.videoId);
+			}
+		}
+	}
 	componentDidMount() {
 		new plyr('#audio-player', { controls });
 	}
 	componentDidUpdate() {
-		var audio = document.getElementById('audio-player');
+		let audio = document.querySelector('#audio-player');
 		if (this.props.player.isPlaying) {
 			audio.play();
 		} else {
@@ -92,15 +115,27 @@ class Player extends Component {
 	}
 
 	render() {
+		let playPauseIcon;
+		if (this.props.player.isPlaying) {
+			playPauseIcon = <FontAwesomeIcon icon='pause' size='2x' fixedWidth />;
+		} else {
+			playPauseIcon = <FontAwesomeIcon icon='play' size='2x' fixedWidth />;
+		}
 		return (
 			<PlayerContainer className='player-container'>
 				<SongInfo className='song-info'>
 					<SongTitle className='song-title'>{this.props.player.title}</SongTitle>
 				</SongInfo>
 				<PlayerControls className='player-controls'>
-					<FontAwesomeIcon icon='step-backward' size='2x' />
-					<FontAwesomeIcon icon='play' size='2x' fixedWidth />
-					<FontAwesomeIcon icon='step-forward' size='2x' />
+					<FontAwesomeButton>
+						<FontAwesomeIcon icon='step-backward' size='2x' />
+					</FontAwesomeButton>
+					<FontAwesomeButton onClick={this.handleClick}>
+						{playPauseIcon}
+					</FontAwesomeButton>
+					<FontAwesomeButton>
+						<FontAwesomeIcon icon='step-forward' size='2x' />
+					</FontAwesomeButton>
 				</PlayerControls>
 				<audio
 					id='audio-player'

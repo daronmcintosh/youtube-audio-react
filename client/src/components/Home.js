@@ -5,7 +5,6 @@ import { addToQueue, play, pause, updateNowPlayingTitle } from '../actions';
 
 const HomeWrapper = styled.div`
 	margin: 70px auto 120px auto;
-
 	@media only screen and (min-width: 600px) {
 		max-width: 560px;
 	}
