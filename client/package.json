@@ -27,5 +27,6 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {},
-  "proxy": "http://localhost:3001"
+  "proxy": "http://localhost:3001",
+  "homepage": "https://audio-youtube-react.herokuapp.com/"
 }
