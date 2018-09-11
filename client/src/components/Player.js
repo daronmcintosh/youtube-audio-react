@@ -142,6 +142,7 @@ class Player extends Component {
 					src={`/api/play/${this.props.player.videoId}`}
 					onPlay={() => this.props.play(this.props.player.videoId)}
 					onPause={() => this.props.pause()}
+					preload='none'
 				></audio>
 			</PlayerContainer>
 		);
