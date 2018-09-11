@@ -6,7 +6,8 @@ const stream = require('./stream');
 const path = require('path');
 const app = express();
 
-app.use(express.static(__dirname + '/public'));
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, 'client/build')));
 
 // SOURCE URL FOR AUDIO
 app.get('/api/play/:videoId', (req, res) => {
