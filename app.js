@@ -3,6 +3,7 @@ const apiRequest = require('./apiRequest');
 const ytdl = require('ytdl-core');
 const ffmpeg = require('fluent-ffmpeg');
 const stream = require('./stream');
+const path = require('path');
 const app = express();
 
 app.use(express.static(__dirname + '/public'));
@@ -95,6 +96,12 @@ app.get('/trending', (req, res) => {
 		res.write(JSON.stringify(results));
 		res.end();
 	});
+});
+
+// The "catchall" handler: for any request that doesn't
+// match one above, send back React's index.html file.
+app.get('*', (req, res) => {
+	res.sendFile(path.join(__dirname + '/client/build/index.html'));
 });
 
 let port = process.env.PORT || 3001;
