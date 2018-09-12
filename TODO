@@ -8,6 +8,8 @@ youtube-audio-react:
   ✔ fix the "Country Trending Videos" div and hr so they start wherever the first video starts and ends where the last video ends @done(18-09-03 21:29)
   ✔ add logic to update player controls so they synced with the audio @done(18-09-10 01:03)
   ✔ add seeking to player @done(18-09-10 01:19)
+  ☐ HPE_INVALID_CONSTANT when proxying from express backend. It is sending http and not https from express backend
+    A fix was implemented using heroku-ssl-redirect but has not been verified
   ☐ separate react frontend and backend so they have to be started separately
   ☐ add classname to everything
   ☐ use es6 wherever possible
