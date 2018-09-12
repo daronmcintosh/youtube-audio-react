@@ -1,10 +1,10 @@
-require("dotenv").config();
-const { google } = require("googleapis");
-const moment = require("moment");
+require('dotenv').config();
+const { google } = require('googleapis');
+const moment = require('moment');
 
 // initialize the Youtube API library
 const youtube = google.youtube({
-	version: "v3",
+	version: 'v3',
 	auth: process.env.API_KEY
 });
 
