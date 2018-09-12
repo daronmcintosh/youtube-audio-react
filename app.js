@@ -1,3 +1,4 @@
+const sslRedirect = require('heroku-ssl-redirect');
 const express = require('express');
 const apiRequest = require('./apiRequest');
 const ytdl = require('ytdl-core');
@@ -6,6 +7,8 @@ const stream = require('./stream');
 const path = require('path');
 const app = express();
 
+// enable ssl redirect
+app.use(sslRedirect());
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
 
