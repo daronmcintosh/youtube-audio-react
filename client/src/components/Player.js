@@ -127,13 +127,13 @@ class Player extends Component {
 					<SongTitle className='song-title'>{this.props.player.title}</SongTitle>
 				</SongInfo>
 				<PlayerControls className='player-controls'>
-					<FontAwesomeButton>
+					<FontAwesomeButton className='font-awesome-button'>
 						<FontAwesomeIcon icon='step-backward' size='2x' />
 					</FontAwesomeButton>
-					<FontAwesomeButton onClick={this.handleClick}>
+					<FontAwesomeButton className='font-awesome-button' onClick={this.handleClick}>
 						{playPauseIcon}
 					</FontAwesomeButton>
-					<FontAwesomeButton>
+					<FontAwesomeButton className='font-awesome-button'>
 						<FontAwesomeIcon icon='step-forward' size='2x' />
 					</FontAwesomeButton>
 				</PlayerControls>

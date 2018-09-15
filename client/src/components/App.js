@@ -20,21 +20,24 @@ injectGlobal`
 	}
 `;
 
+const RouteWrapper = styled.div`
+`;
+
 const AppWrapper = styled.div`
 `;
 
 class App extends Component {
 	render() {
 		return (
-			<Router>
-				<div>
+			<Router className='router'>
+				<RouteWrapper className='routes-wrapper'>
 					<AppWrapper className='App'>
-						<Search />
-						<Player />
+						<Search className='Search'/>
+						<Player className='Player'/>
 					</AppWrapper>
 					<Route exact path='/' component={Home} />
 					<Route path='/results' component={Results} />
-				</div>
+				</RouteWrapper>
 			</Router>
 		);
 	}

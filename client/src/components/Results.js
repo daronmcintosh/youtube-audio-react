@@ -139,10 +139,10 @@ class Results extends Component {
 	}
 	render() {
 		return (
-			<ResultsWrapper>
+			<ResultsWrapper className='results-wrapper'>
 				<ResultsTitle className='results-title'>Results</ResultsTitle>
 				<HorizontalRule className='horizontal-rule' />
-				<SearchResultsWrapper>
+				<SearchResultsWrapper className='search-results-wrapper'>
 					{this.props.searchResults.map(result =>
 						<SearchResult key={result.id} className={`search-result ${result.kind}`} onClick={(e) => this.handleLinkClick(result.id, result.title, result.kind, e)}>
 							<ImageWrapper className='search-result-img-wrapper'>

@@ -90,9 +90,9 @@ class Home extends Component {
 	}
 	render() {
 		return (
-			<HomeWrapper>
-				<CountryTrendingVideosTitle>United States Trending Videos</CountryTrendingVideosTitle>
-				<HorizontalRule />
+			<HomeWrapper className='home-wrapper'>
+				<CountryTrendingVideosTitle className='country-trending-videos-title'>United States Trending Videos</CountryTrendingVideosTitle>
+				<HorizontalRule className='horizantal-rule' />
 				<TrendingVideosWrapper className='trending-videos-wrapper'>
 					{this.state.trendingVideos.map(video =>
 						<TrendingVideo key={video.id} className='trending-video' onClick={(e) => this.handleLinkClick(video.id, video.title, e)}>

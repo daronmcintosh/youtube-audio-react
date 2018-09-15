@@ -45,8 +45,8 @@ class Search extends Component {
 		return (
 			<div>
 				<SearchNav className='search-nav'>
-					<HomeButton to='/'><span className='search-nav-home-button-text'>Youtube Audio</span><FontAwesomeIconWrapper icon='home' size='2x' /></HomeButton>
-					<SearchForm />
+					<HomeButton to='/' className='search-nav-home-button'><span className='search-nav-home-button-text'>Youtube Audio</span><FontAwesomeIconWrapper icon='home' size='2x' /></HomeButton>
+					<SearchForm className='search-nav-form' />
 				</SearchNav>
 			</div>
 		);

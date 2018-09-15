@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "pm2-runtime app.js --max-memory-restart 450M",
     "heroku-postbuild": "cd client && npm install && npm run build",
-    "devStart": "concurrently \"pm2-runtime app.js --max-memory-restart 450M\" \"cd client && npm start\""
+    "devStart": "concurrently \"pm2 start app.js --max-memory-restart 450M\" \"cd client && npm start\""
   },
   "author": "Daron McIntosh",
   "license": "ISC",
