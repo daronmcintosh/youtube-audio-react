@@ -3,6 +3,9 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { addToQueue, play, pause, updateNowPlayingTitle } from '../actions';
 
+import { ContextMenu, MenuItem, ContextMenuTrigger } from 'react-contextmenu';
+
+
 const HomeWrapper = styled.div`
 	margin: 70px auto 120px auto;
 	@media only screen and (min-width: 600px) {
@@ -73,6 +76,9 @@ const TrendingVideoTitle = styled.div`
 	-webkit-line-clamp: 2;
 `;
 
+const MenuItemStyled = styled(MenuItem)`
+	color: white;
+`;
 class Home extends Component {
 	constructor(props) {
 		super(props);
@@ -95,10 +101,18 @@ class Home extends Component {
 				<HorizontalRule className='horizantal-rule' />
 				<TrendingVideosWrapper className='trending-videos-wrapper'>
 					{this.state.trendingVideos.map(video =>
-						<TrendingVideo key={video.id} className='trending-video' onClick={(e) => this.handleLinkClick(video.id, video.title, e)}>
-							<TrendingVideoImg className='trending-video-img' src={video.imgSrc} />
-							<TrendingVideoTitle className='trending-video-title'>{video.title}</TrendingVideoTitle>
-						</TrendingVideo>
+						<div>
+							<ContextMenuTrigger id='Simple'>
+								<TrendingVideo key={video.id} className='trending-video' onClick={(e) => this.handleLinkClick(video.id, video.title, e)}>
+									<TrendingVideoImg className='trending-video-img' src={video.imgSrc} />
+									<TrendingVideoTitle className='trending-video-title'>{video.title}</TrendingVideoTitle>
+								</TrendingVideo>
+							</ContextMenuTrigger>
+							<ContextMenu id='Simple'>
+								{/* <MenuItemStyled>Add to Queue</MenuItemStyled> */}
+								<MenuItem>Add to Queue</MenuItem>
+							</ContextMenu>
+						</div>
 					)}
 				</TrendingVideosWrapper>
 			</HomeWrapper>

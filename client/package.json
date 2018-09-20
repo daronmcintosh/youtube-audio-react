@@ -13,6 +13,7 @@
     "moment": "^2.22.2",
     "plyr": "^3.4.3",
     "react": "^16.4.1",
+    "react-contextmenu": "^2.9.3",
     "react-dom": "^16.4.1",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.3.1",
