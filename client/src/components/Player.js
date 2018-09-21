@@ -84,6 +84,7 @@ class Player extends Component {
 	constructor(props) {
 		super(props);
 		this.handleClick = this.handleClick.bind(this);
+		this.nextSong = this.nextSong.bind(this);
 	}
 	handleClick() {
 		if (this.props.player.isPlaying) {
@@ -92,6 +93,11 @@ class Player extends Component {
 			if (this.props.player.videoId !== 0) {
 				this.props.play(this.props.player.videoId);
 			}
+		}
+	}
+	nextSong(){
+		if(this.props.queue.length > 0 ){
+			this.props.play(this.props.queue[0]);
 		}
 	}
 	componentDidMount() {
@@ -133,7 +139,7 @@ class Player extends Component {
 					<FontAwesomeButton className='font-awesome-button' onClick={this.handleClick}>
 						{playPauseIcon}
 					</FontAwesomeButton>
-					<FontAwesomeButton className='font-awesome-button'>
+					<FontAwesomeButton className='font-awesome-button' onClick={this.nextSong}>
 						<FontAwesomeIcon icon='step-forward' size='2x' />
 					</FontAwesomeButton>
 				</PlayerControls>

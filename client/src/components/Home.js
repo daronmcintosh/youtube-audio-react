@@ -76,18 +76,22 @@ const TrendingVideoTitle = styled.div`
 	-webkit-line-clamp: 2;
 `;
 
-const MenuItemStyled = styled(MenuItem)`
-	color: white;
-`;
 class Home extends Component {
 	constructor(props) {
 		super(props);
 		this.state = { trendingVideos: [] };
+		this.handleClick= this.handleClick.bind(this);
+		this.handleLinkClick= this.handleLinkClick.bind(this);
 	}
-	handleLinkClick(videoId, title, event) {
+	handleLinkClick(videoId, title) {
 		this.props.play(videoId);
 		this.props.updateNowPlayingTitle(title);
 		// this.props.addToQueue(videoId);
+	}
+	handleClick(e, data, target) {
+		// let title = target.firstElementChild.getAttribute('data-videotitle');
+		let id = target.firstElementChild.getAttribute('data-videoid');
+		this.props.addToQueue(id);
 	}
 	componentDidMount() {
 		fetch('/trending')
@@ -101,19 +105,18 @@ class Home extends Component {
 				<HorizontalRule className='horizantal-rule' />
 				<TrendingVideosWrapper className='trending-videos-wrapper'>
 					{this.state.trendingVideos.map(video =>
-						<div>
-							<ContextMenuTrigger id='Simple'>
-								<TrendingVideo key={video.id} className='trending-video' onClick={(e) => this.handleLinkClick(video.id, video.title, e)}>
+						<div key={video.id}>
+							<ContextMenuTrigger id='Context-Menu'>
+								<TrendingVideo className='trending-video' data-videoid={video.id} data-videotitle={video.title} onClick={() => this.handleLinkClick(video.id, video.title)}>
 									<TrendingVideoImg className='trending-video-img' src={video.imgSrc} />
 									<TrendingVideoTitle className='trending-video-title'>{video.title}</TrendingVideoTitle>
 								</TrendingVideo>
 							</ContextMenuTrigger>
-							<ContextMenu id='Simple'>
-								{/* <MenuItemStyled>Add to Queue</MenuItemStyled> */}
-								<MenuItem>Add to Queue</MenuItem>
-							</ContextMenu>
 						</div>
 					)}
+					<ContextMenu id='Context-Menu'>
+						<MenuItem onClick={this.handleClick}>Add to Queue</MenuItem>
+					</ContextMenu>
 				</TrendingVideosWrapper>
 			</HomeWrapper>
 		);

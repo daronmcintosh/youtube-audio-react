@@ -10,6 +10,8 @@ youtube-audio-react:
   ✔ add seeking to player @done(18-09-10 01:19)
   ✘ separate react frontend and backend so they have to be started separately @cancelled(18-09-15 13:05)
   ✔ add classname to everything @done(18-09-15 13:37)
+  ☐ rename classes(handleClick) to proper function names that mean something
+  ☐ implement forward and backward functionaility to queuing
   ☐ implement a better logic for switching play pause button
   ☐ implement queuing
   ☐ disable highlighting on seekbar
