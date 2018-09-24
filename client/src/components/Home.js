@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { addToQueue, play, pause, updateNowPlayingTitle } from '../actions';
+import { addToQueue } from '../actions';
 
 import { ContextMenu, MenuItem, ContextMenuTrigger } from 'react-contextmenu';
 
@@ -80,18 +80,16 @@ class Home extends Component {
 	constructor(props) {
 		super(props);
 		this.state = { trendingVideos: [] };
-		this.handleClick= this.handleClick.bind(this);
-		this.handleLinkClick= this.handleLinkClick.bind(this);
+		this.addSongToQueue= this.addSongToQueue.bind(this);
+		this.playSong= this.playSong.bind(this);
 	}
-	handleLinkClick(videoId, title) {
-		this.props.play(videoId);
-		this.props.updateNowPlayingTitle(title);
-		// this.props.addToQueue(videoId);
+	playSong(videoId, title) {
+		this.props.addToQueue(videoId, title);
 	}
-	handleClick(e, data, target) {
-		// let title = target.firstElementChild.getAttribute('data-videotitle');
+	addSongToQueue(e, data, target) {
 		let id = target.firstElementChild.getAttribute('data-videoid');
-		this.props.addToQueue(id);
+		let title = target.firstElementChild.getAttribute('data-videotitle');
+		this.props.addToQueue(id, title);
 	}
 	componentDidMount() {
 		fetch('/trending')
@@ -107,7 +105,7 @@ class Home extends Component {
 					{this.state.trendingVideos.map(video =>
 						<div key={video.id}>
 							<ContextMenuTrigger id='Context-Menu'>
-								<TrendingVideo className='trending-video' data-videoid={video.id} data-videotitle={video.title} onClick={() => this.handleLinkClick(video.id, video.title)}>
+								<TrendingVideo className='trending-video' data-videoid={video.id} data-videotitle={video.title} onClick={() => this.playSong(video.id, video.title)}>
 									<TrendingVideoImg className='trending-video-img' src={video.imgSrc} />
 									<TrendingVideoTitle className='trending-video-title'>{video.title}</TrendingVideoTitle>
 								</TrendingVideo>
@@ -115,7 +113,7 @@ class Home extends Component {
 						</div>
 					)}
 					<ContextMenu id='Context-Menu'>
-						<MenuItem onClick={this.handleClick}>Add to Queue</MenuItem>
+						<MenuItem onClick={this.addSongToQueue}>Add to Queue</MenuItem>
 					</ContextMenu>
 				</TrendingVideosWrapper>
 			</HomeWrapper>
@@ -125,17 +123,8 @@ class Home extends Component {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		addToQueue: (videoId) => {
-			dispatch(addToQueue(videoId));
-		},
-		play: (videoId) => {
-			dispatch(play(videoId));
-		},
-		pause: () => {
-			dispatch(pause());
-		},
-		updateNowPlayingTitle: (title) => {
-			dispatch(updateNowPlayingTitle(title));
+		addToQueue: (videoId, title) => {
+			dispatch(addToQueue(videoId, title));
 		}
 	};
 };

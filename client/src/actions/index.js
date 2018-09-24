@@ -3,12 +3,13 @@ export const addSearchResults = results => ({
 	searchResults: results
 });
 
-export const addToQueue = videoId => ({
+export const addToQueue = (videoId, title) => ({
 	type: 'ADD_TO_QUEUE',
-	videoId: videoId
+	videoId: videoId,
+	title: title
 });
 
-export const play = (videoId) => ({
+export const play = videoId => ({
 	type: 'PLAY',
 	videoId: videoId
 });
@@ -17,7 +18,7 @@ export const pause = () => ({
 	type: 'PAUSE'
 });
 
-export const updateNowPlayingTitle = (title) => ({
+export const updateNowPlayingTitle = title => ({
 	type: 'UPDATE_NOW_PLAYING_TITLE',
 	title: title
 });

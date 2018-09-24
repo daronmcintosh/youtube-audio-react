@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { play, pause } from '../actions';
+import { play, pause, updateNowPlayingTitle } from '../actions';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import plyr from 'plyr';
@@ -83,10 +83,12 @@ const FontAwesomeButton = styled.button`
 class Player extends Component {
 	constructor(props) {
 		super(props);
-		this.handleClick = this.handleClick.bind(this);
+		this.togglePlayPause = this.togglePlayPause.bind(this);
 		this.nextSong = this.nextSong.bind(this);
+		this.previousSong = this.previousSong.bind(this);
+		this.state = { currentSongIndex: 0 };
 	}
-	handleClick() {
+	togglePlayPause() {
 		if (this.props.player.isPlaying) {
 			this.props.pause();
 		} else {
@@ -95,15 +97,28 @@ class Player extends Component {
 			}
 		}
 	}
-	nextSong(){
-		if(this.props.queue.length > 0 ){
-			this.props.play(this.props.queue[0]);
+	previousSong() {
+		this.setState((state) => ({ currentSongIndex: state.currentSongIndex -= 1 }));
+		if (this.props.queue.length > 0) {
+			this.props.play(this.props.queue[this.state.currentSongIndex]);
+			this.props.updateNowPlayingTitle(this.props.queue[this.state.currentSongIndex].title);
+		}
+	}
+	nextSong() {
+		this.setState((state) => ({ currentSongIndex: state.currentSongIndex += 1 }));
+		if (this.props.queue.length > 0) {
+			this.props.play(this.props.queue[this.state.currentSongIndex].videoId);
+			this.props.updateNowPlayingTitle(this.props.queue[this.state.currentSongIndex].title);
 		}
 	}
 	componentDidMount() {
 		new plyr('#audio-player', { controls });
 	}
 	componentDidUpdate() {
+		// if(this.props.queue.length === 1){
+			// this.props.play(this.props.queue[0].videoId);
+			// this.props.updateNowPlayingTitle(this.props.queue[0].title);
+		// }
 		let audio = document.querySelector('#audio-player');
 		if (this.props.player.isPlaying) {
 			audio.play();
@@ -133,10 +148,10 @@ class Player extends Component {
 					<SongTitle className='song-title'>{this.props.player.title}</SongTitle>
 				</SongInfo>
 				<PlayerControls className='player-controls'>
-					<FontAwesomeButton className='font-awesome-button'>
+					<FontAwesomeButton className='font-awesome-button' onClick={this.previousSong}>
 						<FontAwesomeIcon icon='step-backward' size='2x' />
 					</FontAwesomeButton>
-					<FontAwesomeButton className='font-awesome-button' onClick={this.handleClick}>
+					<FontAwesomeButton className='font-awesome-button' onClick={this.togglePlayPause}>
 						{playPauseIcon}
 					</FontAwesomeButton>
 					<FontAwesomeButton className='font-awesome-button' onClick={this.nextSong}>
@@ -169,6 +184,9 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		pause: () => {
 			dispatch(pause());
+		},
+		updateNowPlayingTitle: (title) => {
+			dispatch(updateNowPlayingTitle(title));
 		}
 	};
 };

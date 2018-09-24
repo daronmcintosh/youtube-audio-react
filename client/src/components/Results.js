@@ -125,7 +125,7 @@ class Results extends Component {
 		this.handleLinkClick = this.handleLinkClick.bind(this);
 	}
 
-	handleLinkClick(videoId, title, kind, event) {
+	handleLinkClick(videoId, title, kind) {
 		// TODO: handle whether the item is a channel, playlist or a video here
 		if (kind.includes('video')) {
 			this.props.play(videoId);
@@ -144,7 +144,7 @@ class Results extends Component {
 				<HorizontalRule className='horizontal-rule' />
 				<SearchResultsWrapper className='search-results-wrapper'>
 					{this.props.searchResults.map(result =>
-						<SearchResult key={result.id} className={`search-result ${result.kind}`} onClick={(e) => this.handleLinkClick(result.id, result.title, result.kind, e)}>
+						<SearchResult key={result.id} className={`search-result ${result.kind}`} onClick={() => this.handleLinkClick(result.id, result.title, result.kind)}>
 							<ImageWrapper className='search-result-img-wrapper'>
 								{result.kind.includes('channel')
 									? <SearchResultImg className='search-result-img' circular src={result.imgSrc} />

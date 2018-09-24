@@ -1,9 +1,12 @@
 const queue = (state = [], action) => {
+	let videoId = action.videoId;
+	let title = action.title;
 	switch (action.type) {
 	case 'ADD_TO_QUEUE':
 		return [
 			...state,
-			action.videoId
+			{videoId, title}
+			// action.videoId
 		];
 	default:
 		return state;

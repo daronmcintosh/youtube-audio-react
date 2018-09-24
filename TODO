@@ -10,10 +10,11 @@ youtube-audio-react:
   ✔ add seeking to player @done(18-09-10 01:19)
   ✘ separate react frontend and backend so they have to be started separately @cancelled(18-09-15 13:05)
   ✔ add classname to everything @done(18-09-15 13:37)
-  ☐ rename classes(handleClick) to proper function names that mean something
+  ✔ rename classes(handleClick) to proper function names that mean something @done(18-09-24 00:59)
+  ✔ implement queuing @done(18-09-24 01:00)
+  ☐ figure out how to play a song when a link is clicked and there is only one item in the queue
   ☐ implement forward and backward functionaility to queuing
   ☐ implement a better logic for switching play pause button
-  ☐ implement queuing
   ☐ disable highlighting on seekbar
   ☐ fix error where user seeks a lot on a section that isn't buffered and results in some type of infinite loop. Causes the web page to slow down drastically until refresh
   ☐ fix this:Uncaught (in promise) DOMException: The play() request was interrupted by a new load request. It happens when you skip a track while the current is still loading
