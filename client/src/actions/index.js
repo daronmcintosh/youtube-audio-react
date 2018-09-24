@@ -22,3 +22,11 @@ export const updateNowPlayingTitle = title => ({
 	type: 'UPDATE_NOW_PLAYING_TITLE',
 	title: title
 });
+
+export const previousSong = () => ({
+	type: 'PREVIOUS_SONG'
+});
+
+export const nextSong = () => ({
+	type: 'NEXT_SONG'
+});

@@ -12,8 +12,9 @@ youtube-audio-react:
   ✔ add classname to everything @done(18-09-15 13:37)
   ✔ rename classes(handleClick) to proper function names that mean something @done(18-09-24 00:59)
   ✔ implement queuing @done(18-09-24 01:00)
+  ✔ implement forward and backward functionaility to queuing @done(18-09-24 15:38)
   ☐ figure out how to play a song when a link is clicked and there is only one item in the queue
-  ☐ implement forward and backward functionaility to queuing
+  ☐ fix crashing when skipping to previous songs
   ☐ implement a better logic for switching play pause button
   ☐ disable highlighting on seekbar
   ☐ fix error where user seeks a lot on a section that isn't buffered and results in some type of infinite loop. Causes the web page to slow down drastically until refresh

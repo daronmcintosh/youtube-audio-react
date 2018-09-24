@@ -5,8 +5,7 @@ const queue = (state = [], action) => {
 	case 'ADD_TO_QUEUE':
 		return [
 			...state,
-			{videoId, title}
-			// action.videoId
+			{ videoId, title }
 		];
 	default:
 		return state;

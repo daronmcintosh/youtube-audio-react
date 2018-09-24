@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { play, pause, updateNowPlayingTitle } from '../actions';
+import { play, pause, updateNowPlayingTitle, previousSong, nextSong } from '../actions';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import plyr from 'plyr';
@@ -84,9 +84,8 @@ class Player extends Component {
 	constructor(props) {
 		super(props);
 		this.togglePlayPause = this.togglePlayPause.bind(this);
-		this.nextSong = this.nextSong.bind(this);
 		this.previousSong = this.previousSong.bind(this);
-		this.state = { currentSongIndex: 0 };
+		this.nextSong = this.nextSong.bind(this);
 	}
 	togglePlayPause() {
 		if (this.props.player.isPlaying) {
@@ -98,28 +97,27 @@ class Player extends Component {
 		}
 	}
 	previousSong() {
-		this.setState((state) => ({ currentSongIndex: state.currentSongIndex -= 1 }));
 		if (this.props.queue.length > 0) {
-			this.props.play(this.props.queue[this.state.currentSongIndex]);
-			this.props.updateNowPlayingTitle(this.props.queue[this.state.currentSongIndex].title);
+			this.props.previousSong();
+			this.props.play(this.props.queue[this.props.player.currentSongIndex].videoId);
+			this.props.updateNowPlayingTitle(this.props.queue[this.props.player.currentSongIndex].title);
 		}
 	}
 	nextSong() {
-		this.setState((state) => ({ currentSongIndex: state.currentSongIndex += 1 }));
-		if (this.props.queue.length > 0) {
-			this.props.play(this.props.queue[this.state.currentSongIndex].videoId);
-			this.props.updateNowPlayingTitle(this.props.queue[this.state.currentSongIndex].title);
+		if (this.props.queue.length > 0 && this.props.player.currentSongIndex + 1 !== this.props.queue.length) {
+			this.props.nextSong();
+			this.props.play(this.props.queue[this.props.player.currentSongIndex].videoId);
+			this.props.updateNowPlayingTitle(this.props.queue[this.props.player.currentSongIndex].title);
 		}
 	}
 	componentDidMount() {
 		new plyr('#audio-player', { controls });
 	}
 	componentDidUpdate() {
-		// if(this.props.queue.length === 1){
-			// this.props.play(this.props.queue[0].videoId);
-			// this.props.updateNowPlayingTitle(this.props.queue[0].title);
-		// }
 		let audio = document.querySelector('#audio-player');
+		if (this.props.queue.length === 1) {
+			this.nextSong();
+		}
 		if (this.props.player.isPlaying) {
 			audio.play();
 		} else {
@@ -187,6 +185,12 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		updateNowPlayingTitle: (title) => {
 			dispatch(updateNowPlayingTitle(title));
+		},
+		previousSong: () => {
+			dispatch(previousSong());
+		},
+		nextSong: () => {
+			dispatch(nextSong());
 		}
 	};
 };
