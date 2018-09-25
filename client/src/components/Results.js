@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addToQueue, play, pause, updateNowPlayingTitle, addSearchResults } from '../actions';
+import { addToQueue, play, updateNowPlayingTitle, addSearchResults } from '../actions';
 import styled, { css } from 'styled-components';
+
+import { ContextMenu, MenuItem, ContextMenuTrigger } from 'react-contextmenu';
 
 const ResultsWrapper = styled.div`
 	margin: 70px auto 120px auto;
@@ -123,6 +125,7 @@ class Results extends Component {
 	constructor(props) {
 		super(props);
 		this.handleLinkClick = this.handleLinkClick.bind(this);
+		this.addSongToQueue = this.addSongToQueue.bind(this);
 	}
 
 	handleLinkClick(videoId, title, kind) {
@@ -137,6 +140,11 @@ class Results extends Component {
 		}
 		// this.props.addToQueue(videoId);
 	}
+	addSongToQueue(e, data, target) {
+		let id = target.firstElementChild.getAttribute('data-videoid');
+		let title = target.firstElementChild.getAttribute('data-videotitle');
+		this.props.addToQueue(id, title);
+	}
 	render() {
 		return (
 			<ResultsWrapper className='results-wrapper'>
@@ -144,23 +152,30 @@ class Results extends Component {
 				<HorizontalRule className='horizontal-rule' />
 				<SearchResultsWrapper className='search-results-wrapper'>
 					{this.props.searchResults.map(result =>
-						<SearchResult key={result.id} className={`search-result ${result.kind}`} onClick={() => this.handleLinkClick(result.id, result.title, result.kind)}>
-							<ImageWrapper className='search-result-img-wrapper'>
-								{result.kind.includes('channel')
-									? <SearchResultImg className='search-result-img' circular src={result.imgSrc} />
-									: <SearchResultImg className='search-result-img' src={result.imgSrc} />
-								}
-							</ImageWrapper>
-							<SearchResultInfo className='search-result-info'>
-								<SearchResultTitle className='search-result-title'>{result.title}</SearchResultTitle>
-								{!result.kind.includes('channel')
-									? <SearchResultChannel className='search-result-channelTitle'>{result.channelTitle}</SearchResultChannel>
-									: null
-								}
-								<SearchResultDescription className='search-result-description'>{result.description}</SearchResultDescription>
-							</SearchResultInfo>
-						</SearchResult>
+						<div key={result.id}>
+							<ContextMenuTrigger id='Context-Menu'>
+								<SearchResult className={`search-result ${result.kind}`} data-videoid={result.id} data-videotitle={result.title} onClick={() => this.handleLinkClick(result.id, result.title, result.kind)}>
+									<ImageWrapper className='search-result-img-wrapper'>
+										{result.kind.includes('channel')
+											? <SearchResultImg className='search-result-img' circular src={result.imgSrc} />
+											: <SearchResultImg className='search-result-img' src={result.imgSrc} />
+										}
+									</ImageWrapper>
+									<SearchResultInfo className='search-result-info'>
+										<SearchResultTitle className='search-result-title'>{result.title}</SearchResultTitle>
+										{!result.kind.includes('channel')
+											? <SearchResultChannel className='search-result-channelTitle'>{result.channelTitle}</SearchResultChannel>
+											: null
+										}
+										<SearchResultDescription className='search-result-description'>{result.description}</SearchResultDescription>
+									</SearchResultInfo>
+								</SearchResult>
+							</ContextMenuTrigger>
+						</div>
 					)}
+					<ContextMenu id='Context-Menu'>
+						<MenuItem onClick={this.addSongToQueue}>Add to Queue</MenuItem>
+					</ContextMenu>
 				</SearchResultsWrapper>
 			</ResultsWrapper>
 		);
@@ -175,14 +190,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		addToQueue: (videoId) => {
-			dispatch(addToQueue(videoId));
+		addToQueue: (videoId, title) => {
+			dispatch(addToQueue(videoId, title));
 		},
 		play: (videoId) => {
 			dispatch(play(videoId));
-		},
-		pause: () => {
-			dispatch(pause());
 		},
 		updateNowPlayingTitle: (title) => {
 			dispatch(updateNowPlayingTitle(title));

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { addToQueue } from '../actions';
+import { addToQueue, play, updateNowPlayingTitle } from '../actions';
 
 import { ContextMenu, MenuItem, ContextMenuTrigger } from 'react-contextmenu';
 
@@ -80,11 +80,12 @@ class Home extends Component {
 	constructor(props) {
 		super(props);
 		this.state = { trendingVideos: [] };
-		this.addSongToQueue= this.addSongToQueue.bind(this);
-		this.playSong= this.playSong.bind(this);
+		this.addSongToQueue = this.addSongToQueue.bind(this);
+		this.playSong = this.playSong.bind(this);
 	}
 	playSong(videoId, title) {
-		this.props.addToQueue(videoId, title);
+		this.props.play(videoId);
+		this.props.updateNowPlayingTitle(title);
 	}
 	addSongToQueue(e, data, target) {
 		let id = target.firstElementChild.getAttribute('data-videoid');
@@ -125,6 +126,12 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		addToQueue: (videoId, title) => {
 			dispatch(addToQueue(videoId, title));
+		},
+		play: (videoId) => {
+			dispatch(play(videoId));
+		},
+		updateNowPlayingTitle: (title) => {
+			dispatch(updateNowPlayingTitle(title));
 		}
 	};
 };

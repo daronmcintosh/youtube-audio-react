@@ -13,10 +13,14 @@ youtube-audio-react:
   ✔ rename classes(handleClick) to proper function names that mean something @done(18-09-24 00:59)
   ✔ implement queuing @done(18-09-24 01:00)
   ✔ implement forward and backward functionaility to queuing @done(18-09-24 15:38)
-  ☐ figure out how to play a song when a link is clicked and there is only one item in the queue
-  ☐ fix crashing when skipping to previous songs
+  ✔ fix crashing when skipping to previous songs @done(18-09-25 09:41)
+  ✔ figure out how to play a song when a link is clicked and there is only one item in the queue @done(18-09-25 10:57)
+  ✔ disable highlighting on seekbar @done(18-09-25 10:58)
+  ☐ should the ability to play be separate from from the home and results component?
+    for example to play a single song instead of adding it to the queue
+  ☐ conditional context menu only for videos and playlists and NOT for channels
+  ☐ add a whole playlist to the queue
   ☐ implement a better logic for switching play pause button
-  ☐ disable highlighting on seekbar
   ☐ fix error where user seeks a lot on a section that isn't buffered and results in some type of infinite loop. Causes the web page to slow down drastically until refresh
   ☐ fix this:Uncaught (in promise) DOMException: The play() request was interrupted by a new load request. It happens when you skip a track while the current is still loading
   ☐ Home component should get country trending videos by IP and set that country name in this component

@@ -97,7 +97,7 @@ class Player extends Component {
 		}
 	}
 	previousSong() {
-		if (this.props.queue.length > 0) {
+		if (this.props.player.currentSongIndex > 0) {
 			this.props.previousSong();
 			this.props.play(this.props.queue[this.props.player.currentSongIndex].videoId);
 			this.props.updateNowPlayingTitle(this.props.queue[this.props.player.currentSongIndex].title);
@@ -115,9 +115,6 @@ class Player extends Component {
 	}
 	componentDidUpdate() {
 		let audio = document.querySelector('#audio-player');
-		if (this.props.queue.length === 1) {
-			this.nextSong();
-		}
 		if (this.props.player.isPlaying) {
 			audio.play();
 		} else {
