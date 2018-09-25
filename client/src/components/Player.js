@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { play, pause, updateNowPlayingTitle, previousSong, nextSong } from '../actions';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import plyr from 'plyr';
 
@@ -78,6 +78,9 @@ const FontAwesomeButton = styled.button`
     font: inherit;
     cursor: pointer;
     outline: inherit;
+	${props => props.disabled && css`
+		color: red !important;
+  	`};
 `;
 
 class Player extends Component {
