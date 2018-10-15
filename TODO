@@ -16,13 +16,15 @@ youtube-audio-react:
   ✔ fix crashing when skipping to previous songs @done(18-09-25 09:41)
   ✔ figure out how to play a song when a link is clicked and there is only one item in the queue @done(18-09-25 10:57)
   ✔ disable highlighting on seekbar @done(18-09-25 10:58)
-  ☐ disable step-backward and/or step-forward until the user has songs in the queue to do each action
-  ☐ create a login/registration page and allow users to link their youtube accounts to their accounts
-  ☐ should the ability to play be separate from from the home and results component?
+  ✔ disable step-backward and/or step-forward until the user has songs in the queue to do each action @done(18-10-15 16:17)
+  ✔ should the ability to play be separate from from the home and results component? @done(18-10-15 16:27)
     for example to play a single song instead of adding it to the queue
+    on spotify, they just add everything to the 'queue' whether it be search, playlists, or radio; you are unable to play a single song
+    for now I will just avoid adding everything to the queue just to give it a youtube feel
   ☐ conditional context menu only for videos and playlists and NOT for channels
   ☐ add a whole playlist to the queue
   ☐ implement a better logic for switching play pause button
+  ☐ create a login/registration page and allow users to link their youtube accounts to their accounts
   ☐ fix error where user seeks a lot on a section that isn't buffered and results in some type of infinite loop. Causes the web page to slow down drastically until refresh
   ☐ fix this:Uncaught (in promise) DOMException: The play() request was interrupted by a new load request. It happens when you skip a track while the current is still loading
   ☐ Home component should get country trending videos by IP and set that country name in this component
