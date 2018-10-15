@@ -134,6 +134,20 @@ class Player extends Component {
 	}
 
 	render() {
+		// Logic to disable previous and/or next buttons depending on the queue
+		let previousDisabled = true;
+		let nextDisabled = true;
+		if (this.props.player.currentSongIndex === -1) {
+			previousDisabled = true;
+			nextDisabled = true;
+		}
+		if (this.props.player.currentSongIndex > 0) {
+			previousDisabled = false;
+		}
+		if (this.props.queue.length > 0 && this.props.player.currentSongIndex + 1 !== this.props.queue.length) {
+			nextDisabled = false;
+		}
+		// Logic to determine which icon is shown based on whether music is playing or not
 		let playPauseIcon;
 		if (this.props.player.isPlaying) {
 			playPauseIcon = <FontAwesomeIcon icon='pause' size='2x' fixedWidth />;
@@ -146,13 +160,13 @@ class Player extends Component {
 					<SongTitle className='song-title'>{this.props.player.title}</SongTitle>
 				</SongInfo>
 				<PlayerControls className='player-controls'>
-					<FontAwesomeButton className='font-awesome-button' onClick={this.previousSong}>
+					<FontAwesomeButton className='font-awesome-button' onClick={this.previousSong} disabled={previousDisabled}>
 						<FontAwesomeIcon icon='step-backward' size='2x' />
 					</FontAwesomeButton>
 					<FontAwesomeButton className='font-awesome-button' onClick={this.togglePlayPause}>
 						{playPauseIcon}
 					</FontAwesomeButton>
-					<FontAwesomeButton className='font-awesome-button' onClick={this.nextSong}>
+					<FontAwesomeButton className='font-awesome-button' onClick={this.nextSong} disabled={nextDisabled}>
 						<FontAwesomeIcon icon='step-forward' size='2x' />
 					</FontAwesomeButton>
 				</PlayerControls>
