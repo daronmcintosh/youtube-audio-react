@@ -22,7 +22,10 @@ youtube-audio-react:
     on spotify, they just add everything to the 'queue' whether it be search, playlists, or radio; you are unable to play a single song
     for now I will just avoid adding everything to the queue just to give it a youtube feel
   ☐ conditional context menu only for videos and playlists and NOT for channels
-  ☐ add a whole playlist to the queue
+  ☐ implement a hover effect for 'show more' for each 'playable item' on website
+    show more should just pop up the right click context menu
+    playable items are videos, playlists, livestreams
+  ☐ create feature to add a whole playlist to the queue
   ☐ implement a better logic for switching play pause button
   ☐ create a login/registration page and allow users to link their youtube accounts to their accounts
   ☐ fix error where user seeks a lot on a section that isn't buffered and results in some type of infinite loop. Causes the web page to slow down drastically until refresh
