@@ -25,6 +25,7 @@ youtube-audio-react:
   ☐ implement a hover effect for 'show more' for each 'playable item' on website
     show more should just pop up the right click context menu
     playable items are videos, playlists, livestreams
+  ☐ toast/snackbar when something is added to queue
   ☐ create feature to add a whole playlist to the queue
   ☐ implement a better logic for switching play pause button
   ☐ create a login/registration page and allow users to link their youtube accounts to their accounts
