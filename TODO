@@ -18,22 +18,36 @@ youtube-audio-react:
   ✔ disable highlighting on seekbar @done(18-09-25 10:58)
   ✔ disable step-backward and/or step-forward until the user has songs in the queue to do each action @done(18-10-15 16:17)
   ✔ should the ability to play be separate from from the home and results component? @done(18-10-15 16:27)
-    for example to play a single song instead of adding it to the queue
-    on spotify, they just add everything to the 'queue' whether it be search, playlists, or radio; you are unable to play a single song
-    for now I will just avoid adding everything to the queue just to give it a youtube feel
-  ☐ Refractor to use css grid and/or css flex instead of bootstrap
-  ☐ conditional context menu only for videos and playlists and NOT for channels
-  ☐ implement a hover effect for 'show more' for each 'playable item' on website
-    show more should just pop up the right click context menu
-    playable items are videos, playlists, livestreams
-  ☐ toast/snackbar when something is added to queue
-    use https://github.com/fkhadra/react-toastify
-  ☐ create feature to add a whole playlist to the queue
-  ☐ implement a better logic for switching play pause button
-  ☐ create a login/registration page and allow users to link their youtube accounts to their accounts
-  ☐ fix error where user seeks a lot on a section that isn't buffered and results in some type of infinite loop. Causes the web page to slow down drastically until refresh
-  ☐ fix this:Uncaught (in promise) DOMException: The play() request was interrupted by a new load request. It happens when you skip a track while the current is still loading
+  ✘ implement a hover effect for 'show more' for each 'playable item' on website @cancelled(19-05-05 00:17)
+  show more should just pop up the right click context menu
+  playable items are videos, playlists, livestreams
+  ☐ Everything that gets plays has to go through the queue first
+  Therefore right clicking on the queue
+  ☐ Clean up ffmpeg processes that are not in use(socket.io)
+  ☐ Check all dependencies to make sure they are being used and needed(script tags included)
+  ☐ Update all dependencies to the latest versions
+  ☐ Consider publishing stream.js since it shares code between two projects and it would make it easier to maintain
+  ☐ Redo TODO
+    ☐ Separate into categories: UI, Features, Bugs, Enhancements, Archive
+    ☐ Move all completed, cancelled items to archive
+  ☐ Widen search bar
+  ☐ Give the website a more modern feel, material design with a dark theme(https://material-ui.com/)
+    ☐ Use material ui's snackbar or the below
+      https://github.com/fkhadra/react-toastify
+    ☐ Refractor css to use css grid and/or css flex
+  ☐ Fix all eslint errors
+  ☐ Implement playlists
+    ☐ Create feature to add a whole playlist to the queue
+  ☐ Implement channels
+    ☐ Show a list of playlists and videos
+  ☐ Use intro.js or something similar to give new users an introduction to the different features
+    Save a cookie that simple says newUser:true in the client's browser
+  ☐ Conditional context menu only for videos and playlists and NOT for channels
+  ☐ Implement a better logic for switching play pause button
+  ☐ Create a login/registration page and allow users to link their youtube accounts to their accounts
+  ☐ Fix error where user seeks a lot on a section that isn't buffered and results in some type of infinite loop. Causes the web page to slow down drastically until refresh
+  ☐ Fix this:Uncaught (in promise) DOMException: The play() request was interrupted by a new load request. It happens when you skip a track while the current is still loading
   ☐ Home component should get country trending videos by IP and set that country name in this component
-  ☐ use same method used in Results component to get seemingly higher resolution images on main page
+  ☐ Use same method used in Results component to get seemingly higher resolution images on main page
   ☐ HPE_INVALID_CONSTANT causes ERR_CONTENT_LENGTH_MISMATCHED or vice versa.
-    A fix was implemented using heroku-ssl-redirect but has not been verified
+  ☐ Remove console.logs

@@ -2,24 +2,33 @@
   "name": "youtube-audio-react",
   "version": "1.0.0",
   "description": "spotify webplayer but for youtube",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/iSolutionJA/youtube-audio-react"
+  },
   "main": "app.js",
   "scripts": {
+    "dev": "./node_modules/.bin/concurrently \"pm2 start app.js --max-memory-restart 450M\" \"cd client && npm start\"",
     "preinstall": "npm install pm2 -g",
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "pm2-runtime app.js --max-memory-restart 450M",
-    "heroku-postbuild": "cd client && npm install && npm run build",
-    "devStart": "concurrently \"pm2 start app.js --max-memory-restart 450M\" \"cd client && npm start\""
+    "build": "cd client && npm i && npm run build"
   },
   "author": "Daron McIntosh",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.16.3",
+    "express": "^4.16.4",
+    "fluent-ffmpeg": "^2.1.2",
     "googleapis": "^32.0.0",
     "heroku-ssl-redirect": "0.0.4",
-    "moment": "^2.22.2",
-    "youtube-audio-stream": "^0.2.0"
+    "moment": "^2.24.0",
+    "through2": "^3.0.1",
+    "xtend": "^4.0.1",
+    "ytdl-core": "^0.29.1"
   },
   "devDependencies": {
-    "dotenv": "^6.0.0"
+    "concurrently": "^4.1.0",
+    "dotenv": "^8.0.0",
+    "eslint": "^5.16.0",
+    "eslint-config-google": "^0.12.0"
   }
 }
