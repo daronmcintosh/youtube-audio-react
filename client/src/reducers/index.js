@@ -4,7 +4,7 @@ import queue from './queue';
 import player from './player';
 
 export default combineReducers({
-	searchResults,
-	queue,
-	player
+  searchResults,
+  queue,
+  player,
 });

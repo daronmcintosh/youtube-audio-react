@@ -24,6 +24,7 @@ youtube-audio-react:
   ☐ Everything that gets plays has to go through the queue first
   Therefore right clicking on the queue
   ☐ Clean up ffmpeg processes that are not in use(socket.io)
+  ☐ Add launch.json configurations for debugging backend and frontend
   ☐ Check all dependencies to make sure they are being used and needed(script tags included)
   ☐ Update all dependencies to the latest versions
   ☐ Consider publishing stream.js since it shares code between two projects and it would make it easier to maintain
@@ -35,6 +36,8 @@ youtube-audio-react:
     ☐ Use material ui's snackbar or the below
       https://github.com/fkhadra/react-toastify
     ☐ Refractor css to use css grid and/or css flex
+    ☐ Use One Dark colors or the default if it looks good
+    ☐ Ensure that the context menu follows this same theme
   ☐ Fix all eslint errors
   ☐ Implement playlists
     ☐ Create feature to add a whole playlist to the queue

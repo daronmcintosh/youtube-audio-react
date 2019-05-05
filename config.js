@@ -1,10 +1,7 @@
-const isProduction = process.env.NODE_ENV === 'production';
+require('dotenv').config();
 
-// GET environment variables from .env file if we are not in production
-if (!isProduction) {
-  require('dotenv').config();
-}
+// const isProduction = process.env.NODE_ENV === 'production';
 
 module.exports = {
-  'apiKey': process.env.API_KEY,
+  apiKey: process.env.API_KEY,
 };

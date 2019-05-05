@@ -8,15 +8,6 @@
     "ecmaVersion": 2017
   },
   "extends": [
-    "eslint:recommended",
-    "google"
-  ],
-  "rules": {
-    "prefer-arrow-callback": "error",
-    "prefer-template": "error",
-    "require-jsdoc": "off",
-    "no-whitespace-before-property": "error",
-    "arrow-spacing": "error",
-    "no-console": "off"
-  }
+    "airbnb"
+  ]
 }
