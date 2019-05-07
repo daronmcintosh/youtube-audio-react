@@ -1,56 +1,70 @@
 youtube-audio-react:
-  ✔ use redux to manage the state(playlist, queuing, singles etc) @done(18-08-02 01:06)
-  ✔ use componentDidMount to make sure a route always renders what it is suppose to eg: results?searchQuery=hello @done(18-08-29 14:12)
-  ✘ use redux to determine what is rendered in the main body, etc, search, channel(videos or playlists) @cancelled(18-08-29 14:19)
-  ✔ remove all eslint-disable @done(18-08-29 14:19)
-  ✔ add readme to root and backend then edit client readme @done(18-08-29 14:20)
-  ✔ there should be three break points, >992px - large, >768px - medium and >600px <768px - small. refine these @done(18-09-03 10:37)
-  ✔ fix the "Country Trending Videos" div and hr so they start wherever the first video starts and ends where the last video ends @done(18-09-03 21:29)
-  ✔ add logic to update player controls so they synced with the audio @done(18-09-10 01:03)
-  ✔ add seeking to player @done(18-09-10 01:19)
-  ✘ separate react frontend and backend so they have to be started separately @cancelled(18-09-15 13:05)
-  ✔ add classname to everything @done(18-09-15 13:37)
-  ✔ rename classes(handleClick) to proper function names that mean something @done(18-09-24 00:59)
-  ✔ implement queuing @done(18-09-24 01:00)
-  ✔ implement forward and backward functionaility to queuing @done(18-09-24 15:38)
-  ✔ fix crashing when skipping to previous songs @done(18-09-25 09:41)
-  ✔ figure out how to play a song when a link is clicked and there is only one item in the queue @done(18-09-25 10:57)
-  ✔ disable highlighting on seekbar @done(18-09-25 10:58)
-  ✔ disable step-backward and/or step-forward until the user has songs in the queue to do each action @done(18-10-15 16:17)
-  ✔ should the ability to play be separate from from the home and results component? @done(18-10-15 16:27)
-  ✘ implement a hover effect for 'show more' for each 'playable item' on website @cancelled(19-05-05 00:17)
-  show more should just pop up the right click context menu
-  playable items are videos, playlists, livestreams
-  ☐ Everything that gets plays has to go through the queue first
-  Therefore right clicking on the queue
-  ☐ Clean up ffmpeg processes that are not in use(socket.io)
-  ☐ Add launch.json configurations for debugging backend and frontend
-  ☐ Check all dependencies to make sure they are being used and needed(script tags included)
-  ☐ Update all dependencies to the latest versions
-  ☐ Consider publishing stream.js since it shares code between two projects and it would make it easier to maintain
-  ☐ Redo TODO
-    ☐ Separate into categories: UI, Features, Bugs, Enhancements, Archive
-    ☐ Move all completed, cancelled items to archive
-  ☐ Widen search bar
-  ☐ Give the website a more modern feel, material design with a dark theme(https://material-ui.com/)
-    ☐ Use material ui's snackbar or the below
-      https://github.com/fkhadra/react-toastify
-    ☐ Refractor css to use css grid and/or css flex
-    ☐ Use One Dark colors or the default if it looks good
-    ☐ Ensure that the context menu follows this same theme
-  ☐ Fix all eslint errors
-  ☐ Implement playlists
-    ☐ Create feature to add a whole playlist to the queue
-  ☐ Implement channels
-    ☐ Show a list of playlists and videos
-  ☐ Use intro.js or something similar to give new users an introduction to the different features
-    Save a cookie that simple says newUser:true in the client's browser
-  ☐ Conditional context menu only for videos and playlists and NOT for channels
-  ☐ Implement a better logic for switching play pause button
-  ☐ Create a login/registration page and allow users to link their youtube accounts to their accounts
-  ☐ Fix error where user seeks a lot on a section that isn't buffered and results in some type of infinite loop. Causes the web page to slow down drastically until refresh
-  ☐ Fix this:Uncaught (in promise) DOMException: The play() request was interrupted by a new load request. It happens when you skip a track while the current is still loading
-  ☐ Home component should get country trending videos by IP and set that country name in this component
-  ☐ Use same method used in Results component to get seemingly higher resolution images on main page
-  ☐ HPE_INVALID_CONSTANT causes ERR_CONTENT_LENGTH_MISMATCHED or vice versa.
-  ☐ Remove console.logs
+  UI:
+    ☐ Widen search bar
+    ☐ Give the website a more modern feel, material design with a dark theme(https://material-ui.com/)
+      ☐ Use material ui's snackbar or the below
+        https://github.com/fkhadra/react-toastify
+      ☐ Refractor css to use css grid and/or css flex
+      ☐ Use One Dark colors or the default if it looks good
+      ☐ Ensure that the context menu follows this same theme
+    ☐ Conditional context menu only for videos and playlists and NOT for channels
+
+  Features:
+    ☐ Implement playlists
+      ☐ Create feature to add a whole playlist to the queue
+    ☐ Implement channels
+      ☐ Show a list of playlists and videos
+    ☐ Use intro.js or something similar to give new users an introduction to the different features
+      Save a cookie that simple says newUser:true in the client's browser to determine
+      whether to give introduction or look in intro.js docs if they have something already
+    ☐ Create a login/registration page and allow users to link their youtube accounts to their accounts
+    ☐ Home component should get country trending videos by IP and set that country name in this component
+
+  Bugs:
+    ☐ Fix error where user seeks a lot on a section that isn't buffered and results in some type of infinite loop.
+      Causes the web page to slow down drastically until refresh
+    ☐ Fix this:Uncaught (in promise) DOMException: The play() request was interrupted by a new load request.
+      It happens when you skip a track while the current is still loading
+    ☐ HPE_INVALID_CONSTANT causes ERR_CONTENT_LENGTH_MISMATCHED or vice versa.
+
+  Enhancements:
+    ☐ Everything that gets plays has to go through the queue first
+    ☐ Clean up ffmpeg processes that are not in use(socket.io)
+    ☐ Check all dependencies to make sure they are being used and needed(script tags included)
+    ☐ Update all dependencies to the latest versions
+    ☐ Implement a better logic for switching play pause button
+    ☐ Use same method used in Results component to get seemingly higher resolution images on main page
+
+  Development:
+    ☐ Consider publishing stream.js since it shares code between two projects and it would make it easier to maintain
+    ☐ Fix all eslint errors
+    ☐ Remove console.logs
+    ☐ Update README's
+    ✔ Redo TODO @done(19-05-07 15:56)
+      ✔ Separate into categories: UI, Features, Bugs, Enhancements, Archive @done(19-05-07 15:56)
+    ✔ Move all current completed, cancelled items to archive @done(19-05-07 15:39)
+    ✔ Add launch.json configurations for debugging backend and frontend @done(19-05-07 15:37)
+
+  Archive:
+    ✔ use redux to manage the state(playlist, queuing, singles etc) @done(19-05-07 15:38)
+    ✔ use componentDidMount to make sure a route always renders what it is suppose to eg: results?searchQuery=hello @done(18-08-29 14:12)
+    ✘ use redux to determine what is rendered in the main body, etc, search, channel(videos or playlists) @cancelled(18-08-29 14:19)
+    ✔ remove all eslint-disable @done(18-08-29 14:19)
+    ✔ add readme to root and backend then edit client readme @done(18-08-29 14:20)
+    ✔ there should be three break points, >992px - large, >768px - medium and >600px <768px - small. refine these @done(18-09-03 10:37)
+    ✔ fix the "Country Trending Videos" div and hr so they start wherever the first video starts and ends where the last video ends @done(18-09-03 21:29)
+    ✔ add logic to update player controls so they synced with the audio @done(18-09-10 01:03)
+    ✔ add seeking to player @done(18-09-10 01:19)
+    ✘ separate react frontend and backend so they have to be started separately @cancelled(18-09-15 13:05)
+    ✔ add classname to everything @done(18-09-15 13:37)
+    ✔ rename classes(handleClick) to proper function names that mean something @done(18-09-24 00:59)
+    ✔ implement queuing @done(18-09-24 01:00)
+    ✔ implement forward and backward functionaility to queuing @done(18-09-24 15:38)
+    ✔ fix crashing when skipping to previous songs @done(18-09-25 09:41)
+    ✔ figure out how to play a song when a link is clicked and there is only one item in the queue @done(18-09-25 10:57)
+    ✔ disable highlighting on seekbar @done(18-09-25 10:58)
+    ✔ disable step-backward and/or step-forward until the user has songs in the queue to do each action @done(18-10-15 16:17)
+    ✔ should the ability to play be separate from from the home and results component? @done(18-10-15 16:27)
+    ✘ implement a hover effect for 'show more' for each 'playable item' on website @cancelled(19-05-05 00:17)
+    show more should just pop up the right click context menu
+    playable items are videos, playlists, livestreams
