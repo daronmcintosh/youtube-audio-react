@@ -74,7 +74,7 @@ app.get('/api/play/:videoId', (req, res) => {
           res.writeHead(200, {
             'Content-Type': contentType,
             'Content-Length': durationInBytes,
-            'Transfer-Encoding': 'chuncked',
+            'Transfer-Encoding': 'chunked',
           });
           const streamObj = stream(requestUrl);
           streamObj.stream.pipe(res);
