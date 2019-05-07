@@ -3,11 +3,14 @@ const express = require('express');
 const ytdl = require('ytdl-core');
 const ffmpeg = require('fluent-ffmpeg');
 const path = require('path');
+const morgan = require('morgan');
 const stream = require('./stream');
 const apiRequest = require('./apiRequest');
 
 const app = express();
 
+// Log http requests
+app.use(morgan('dev'));
 // enable ssl redirect
 app.use(sslRedirect());
 // Serve static files from the React app
