@@ -4,8 +4,5 @@ node_modules/
 # build folder
 client/build
 
-#vscode
-.vscode
-
 # dotenv environment variables file
 .env
