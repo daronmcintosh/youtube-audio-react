@@ -17,7 +17,8 @@ async function buildSearch(query) {
   });
   const searchResults = [];
   const { items } = result.data;
-  for (const item of items) {
+
+  items.forEach((item) => {
     const searchObj = {};
     const { kind } = item.id;
     if (kind === 'youtube#video') {
@@ -44,7 +45,7 @@ async function buildSearch(query) {
     searchObj.imgSrc = imageUrl;
     searchObj.description = item.snippet.description;
     searchResults.push(searchObj);
-  }
+  });
   return searchResults;
 }
 
@@ -58,7 +59,7 @@ async function buildTrendingVideos() {
   });
   const videos = [];
   const { items } = result.data;
-  for (const item of items) {
+  items.forEach((item) => {
     const videoObj = {};
     videoObj.id = item.id;
     videoObj.title = item.snippet.title;
@@ -70,18 +71,20 @@ async function buildTrendingVideos() {
     }
     videoObj.imgSrc = imageUrl;
     videos.push(videoObj);
-  }
+  });
   return videos;
 }
 
 async function getDuration(videoId) {
   let duration = 0;
-  await youtube.videos.list({
-    id: videoId,
-    part: 'contentDetails',
-  }).then((result) => {
-    duration = moment.duration(result.data.items[0].contentDetails.duration).asSeconds();
-  });
+  await youtube.videos
+    .list({
+      id: videoId,
+      part: 'contentDetails',
+    })
+    .then((result) => {
+      duration = moment.duration(result.data.items[0].contentDetails.duration).asSeconds();
+    });
   return duration;
 }
 
