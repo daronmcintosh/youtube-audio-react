@@ -8,6 +8,9 @@ youtube-audio-react:
       ☐ Use One Dark colors or the default if it looks good
       ☐ Ensure that the context menu follows this same theme
     ☐ Conditional context menu only for videos and playlists and NOT for channels
+    ☐ Hide player till something is requested to be played
+    ☐ Add an error notification to send messages from server to client
+      Use socket.io to communicate and a snackbar to display
 
   Features:
     ☐ Implement playlists
@@ -19,6 +22,7 @@ youtube-audio-react:
       whether to give introduction or look in intro.js docs if they have something already
     ☐ Create a login/registration page and allow users to link their youtube accounts to their accounts
     ☐ Home component should get country trending videos by IP and set that country name in this component
+    ☐ Use related videos to continue playing songs when the nothing is left in the queue
 
   Bugs:
     ☐ Fix error where user seeks a lot on a section that isn't buffered and results in some type of infinite loop.
@@ -26,6 +30,7 @@ youtube-audio-react:
     ☐ Fix this:Uncaught (in promise) DOMException: The play() request was interrupted by a new load request.
       It happens when you skip a track while the current is still loading
     ☐ HPE_INVALID_CONSTANT causes ERR_CONTENT_LENGTH_MISMATCHED or vice versa.
+    ☐ Duplicate requests made when searching
 
   Enhancements:
     ☐ Everything that gets plays has to go through the queue first
@@ -36,8 +41,15 @@ youtube-audio-react:
     ☐ Use same method used in Results component to get seemingly higher resolution images on main page
 
   Development:
-    ☐ Consider publishing stream.js since it shares code between two projects and it would make it easier to maintain
+    ✔ Consider publishing stream.js since it shares code between two projects and it would make it easier to maintain @done(19-05-11 16:05)
+      Published to the npm registry under the package name @isolution/youtube-audio-stream
+    ✘ Implement live streams into youtube-audio-stream by submitting a pull request @cancelled(19-05-11 16:05)
+      ✘ Use ytld.getInfo() to retrieve meta data and return that in the 'stream' object (stream.info) @cancelled(19-05-11 16:05)
+        Use the url from the format that is chosen so that livestreams and normal videos work out of the box
+        The only thing that is really needed in info is whether or not it is a live stream, content length
+        https://github.com/JamesKyburz/youtube-audio-stream
     ☐ Fix all eslint errors
+    ☐ Add error handling to all promises on client and server
     ☐ Remove console.logs
     ☐ Update README's
     ✔ Redo TODO @done(19-05-07 15:56)
