@@ -8,24 +8,25 @@
   },
   "main": "app.js",
   "scripts": {
-    "debug": "concurrently \"nodemon --nolazy --inspect=9229 app.js\" \"cd client && npm start\"",
+    "debug": "concurrently \"nodemon --nolazy --inspect=9229 --trace-sync-io app.js\" \"cd client && npm start\"",
     "start": "pm2-runtime app.js --max-memory-restart 450M",
     "build": "cd client && npm i && npm run build"
   },
   "author": "Daron McIntosh",
   "license": "ISC",
   "dependencies": {
+    "@isolution/youtube-audio-stream": "^1.0.2",
+    "cors": "^2.8.5",
     "dotenv": "^8.0.0",
     "express": "^4.16.4",
-    "fluent-ffmpeg": "^2.1.2",
     "googleapis": "^32.0.0",
+    "helmet": "^3.18.0",
     "heroku-ssl-redirect": "0.0.4",
+    "loglevel": "^1.6.1",
     "moment": "^2.24.0",
     "morgan": "^1.9.1",
     "pm2": "^3.5.0",
-    "through2": "^3.0.1",
-    "xtend": "^4.0.1",
-    "ytdl-core": "^0.29.1"
+    "serve-favicon": "^2.5.0"
   },
   "devDependencies": {
     "concurrently": "^4.1.0",
