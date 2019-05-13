@@ -50,17 +50,27 @@ app.get('/api/play/:videoId', (req, res, next) => {
 });
 
 // Search Route
-app.get('/results', (req, res) => {
-  apiRequest.buildSearch(req.query.searchQuery).then((searchResults) => {
-    res.json(searchResults);
-  });
+app.get('/results', (req, res, next) => {
+  apiRequest
+    .buildSearch(req.query.searchQuery)
+    .then((searchResults) => {
+      res.json(searchResults);
+    })
+    .catch((err) => {
+      next(err);
+    });
 });
 
 // Trending Route
-app.get('/trending', (req, res) => {
-  apiRequest.buildTrendingVideos().then((results) => {
-    res.json(results);
-  });
+app.get('/trending', (req, res, next) => {
+  apiRequest
+    .buildTrendingVideos()
+    .then((results) => {
+      res.json(results);
+    })
+    .catch((err) => {
+      next(err);
+    });
 });
 
 // Send build page for React app
