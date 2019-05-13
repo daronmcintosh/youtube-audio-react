@@ -8,7 +8,7 @@
   },
   "main": "app.js",
   "scripts": {
-    "debug": "concurrently \"nodemon --nolazy --inspect=9229 --trace-sync-io app.js\" \"cd client && npm start\"",
+    "debug": "concurrently \"nodemon --nolazy --inspect=9229 app.js\" \"cd client && npm start\"",
     "start": "pm2-runtime app.js --max-memory-restart 450M",
     "build": "cd client && npm i && npm run build"
   },
@@ -16,6 +16,7 @@
   "license": "ISC",
   "dependencies": {
     "@isolution/youtube-audio-stream": "^1.0.2",
+    "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "dotenv": "^8.0.0",
     "express": "^4.16.4",
