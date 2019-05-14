@@ -62,19 +62,20 @@ const SearchResultImg = styled.img`
     margin-bottom: -30px;
   }
 
-  ${props => props.circular && css`
-    width: 200px !important;
-    height: 200px !important;
-    border-radius: 50% !important;
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
-    @media only screen and (min-width: 600px) {
-      width: 250px !important;
-      height: 250px !important;
+  ${props => props.circular
+    && css`
+      width: 200px !important;
+      height: 200px !important;
       border-radius: 50% !important;
       margin-top: 0 !important;
       margin-bottom: 0 !important;
-    }
+      @media only screen and (min-width: 600px) {
+        width: 250px !important;
+        height: 250px !important;
+        border-radius: 50% !important;
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+      }
     `};
 `;
 
@@ -91,7 +92,7 @@ const SearchResultInfo = styled.div`
 `;
 
 const SearchResultTitle = styled.div`
-  margin-bottom: .75rem;
+  margin-bottom: 0.75rem;
   font-weight: 600;
   font-size: 1.1rem;
   @media only screen and (min-width: 600px) {
@@ -100,7 +101,7 @@ const SearchResultTitle = styled.div`
 `;
 
 const SearchResultChannel = styled.div`
-  margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
   color: #888;
 `;
 
@@ -110,7 +111,7 @@ const SearchResultDescription = styled.div`
   word-wrap: break-word;
   display: none;
   @media only screen and (min-width: 600px) {
-  display: block;
+    display: block;
   }
 `;
 
@@ -128,6 +129,7 @@ class Results extends Component {
       .then(data => this.props.addSearchResults(data));
   }
 
+  // TODO: Remove this because it is deprecated as of 16.3
   componentWillUnmount() {
     this.props.addSearchResults([]);
   }
@@ -160,20 +162,31 @@ class Results extends Component {
           {this.props.searchResults.map(result => (
             <div key={result.id}>
               <ContextMenuTrigger id="Context-Menu">
-                <SearchResult className={`search-result ${result.kind}`} data-videoid={result.id} data-videotitle={result.title} onClick={() => this.handleLinkClick(result.id, result.title, result.kind)}>
+                <SearchResult
+                  className={`search-result ${result.kind}`}
+                  data-videoid={result.id}
+                  data-videotitle={result.title}
+                  onClick={() => this.handleLinkClick(result.id, result.title, result.kind)}
+                >
                   <ImageWrapper className="search-result-img-wrapper">
-                    {result.kind.includes('channel')
-                      ? <SearchResultImg className="search-result-img" circular src={result.imgSrc} />
-                      : <SearchResultImg className="search-result-img" src={result.imgSrc} />
-                    }
+                    {result.kind.includes('channel') ? (
+                      <SearchResultImg className="search-result-img" circular src={result.imgSrc} />
+                    ) : (
+                      <SearchResultImg className="search-result-img" src={result.imgSrc} />
+                    )}
                   </ImageWrapper>
                   <SearchResultInfo className="search-result-info">
-                    <SearchResultTitle className="search-result-title">{result.title}</SearchResultTitle>
-                    {!result.kind.includes('channel')
-                      ? <SearchResultChannel className="search-result-channelTitle">{result.channelTitle}</SearchResultChannel>
-                      : null
-                    }
-                    <SearchResultDescription className="search-result-description">{result.description}</SearchResultDescription>
+                    <SearchResultTitle className="search-result-title">
+                      {result.title}
+                    </SearchResultTitle>
+                    {!result.kind.includes('channel') ? (
+                      <SearchResultChannel className="search-result-channelTitle">
+                        {result.channelTitle}
+                      </SearchResultChannel>
+                    ) : null}
+                    <SearchResultDescription className="search-result-description">
+                      {result.description}
+                    </SearchResultDescription>
                   </SearchResultInfo>
                 </SearchResult>
               </ContextMenuTrigger>
@@ -207,5 +220,7 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-
-export default connect(mapStateToProps, mapDispatchToProps)(Results);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Results);
