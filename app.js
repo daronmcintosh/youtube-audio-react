@@ -8,6 +8,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const youtubeAudioStream = require('@isolution/youtube-audio-stream');
 const apiRequest = require('./apiRequest');
+const config = require('./config');
 
 const port = process.env.PORT || 3001;
 const app = express();
@@ -39,7 +40,9 @@ app.get('/api/play/:videoId', (req, res, next) => {
       return streamPromise;
     })
     .then((stream) => {
-      stream.on('error', (err) => {
+      // We want to remove all the previous listeners before registering new ones
+      stream.emitter.removeAllListeners('error');
+      stream.emitter.on('error', (err) => {
         next(err);
       });
       stream.pipe(res);
@@ -81,13 +84,18 @@ app.get('*', (req, res) => {
 // Error Handler
 // eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
-  log.trace(err);
   log.error(err.message);
 
-  // res.status(err.status || 500);
-  // res.json({
-  //   message: err.message,
-  // });
+  if (!config.isProduction) {
+    log.trace(err.stack);
+  }
+  // TODO: send socket.io error messages here
+  // if (res.headersSent) {
+  //   return res.end();
+  // }
+
+  res.end();
+  // return res.status(err.status || 500).send(err.message || 'Internal Server Error');
 });
 
 app.listen(port, () => {
