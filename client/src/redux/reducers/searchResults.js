@@ -1,9 +1,9 @@
+import { ADD_SEARCH_RESULTS } from '../actionTypes';
+
 const searchResults = (state = [], action) => {
   switch (action.type) {
-    case 'ADD_SEARCH_RESULTS':
-      return [
-        ...action.searchResults,
-      ];
+    case ADD_SEARCH_RESULTS:
+      return [...action.searchResults];
     default:
       return state;
   }
