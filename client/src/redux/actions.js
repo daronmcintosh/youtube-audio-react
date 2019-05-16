@@ -1,5 +1,5 @@
 import {
-  ADD_SEARCH_RESULTS,
+  SET_SEARCH_TERM,
   ADD_TO_QUEUE,
   PLAY,
   PAUSE,
@@ -8,9 +8,9 @@ import {
   NEXT_SONG,
 } from './actionTypes';
 
-export const addSearchResults = results => ({
-  type: ADD_SEARCH_RESULTS,
-  searchResults: results,
+export const setSearchTerm = term => ({
+  type: SET_SEARCH_TERM,
+  term,
 });
 
 export const addToQueue = (videoId, title) => ({

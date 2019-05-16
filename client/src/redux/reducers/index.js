@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
-import searchResults from './searchResults';
+import searchTerm from './searchTerm';
 import queue from './queue';
 import player from './player';
 
 export default combineReducers({
-  searchResults,
+  searchTerm,
   queue,
   player,
 });
