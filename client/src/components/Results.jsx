@@ -1,12 +1,12 @@
+import axios from 'axios';
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { ContextMenu, ContextMenuTrigger, MenuItem } from 'react-contextmenu';
 import { connect } from 'react-redux';
 import styled, { css } from 'styled-components';
-import PropTypes from 'prop-types';
+import { addToQueue, play, updateNowPlayingTitle } from '../redux/actions';
 
-import { ContextMenu, MenuItem, ContextMenuTrigger } from 'react-contextmenu';
-import {
-  addToQueue, play, updateNowPlayingTitle, addSearchResults,
-} from '../redux/actions';
+import Error from './Error';
 
 const ResultsWrapper = styled.div`
   margin: 70px auto 120px auto;
@@ -118,33 +118,30 @@ const SearchResultDescription = styled.div`
 
 class Results extends Component {
   static propTypes = {
-    location: PropTypes.shape({ search: PropTypes.func.isRequired }).isRequired,
-    addSearchResultsConnect: PropTypes.func.isRequired,
+    addToQueueConnect: PropTypes.func.isRequired,
     playConnect: PropTypes.func.isRequired,
     updateNowPlayingTitleConnect: PropTypes.func.isRequired,
-    addToQueueConnect: PropTypes.func.isRequired,
-    searchResults: PropTypes.arrayOf(PropTypes.object).isRequired,
+    searchTerm: PropTypes.string.isRequired,
   };
 
   constructor(props) {
     super(props);
+    this.state = { isLoaded: false, error: null, searchResults: [] };
     this.handleLinkClick = this.handleLinkClick.bind(this);
     this.addSongToQueue = this.addSongToQueue.bind(this);
   }
 
   componentDidMount() {
-    // Has access to location because it uses the 'Route' component
-    const { location, addSearchResultsConnect } = this.props;
-    const searchQuery = location.search.split('=')[1];
-    fetch(`/results?searchQuery=${searchQuery}`)
-      .then(res => res.json())
-      .then(data => addSearchResultsConnect(data));
+    const { searchTerm } = this.props;
+    axios
+      .get(`/results?searchQuery=${searchTerm}`)
+      .then((result) => {
+        this.setState({ isLoaded: true, searchResults: result.data });
+      })
+      .catch((err) => {
+        this.setState({ isLoaded: true, error: err });
+      });
   }
-
-  // TODO: Remove this because it is deprecated as of 16.3
-  // componentWillUnmount() {
-  //   this.props.addSearchResults([]);
-  // }
 
   handleLinkClick(videoId, title, kind) {
     // TODO: handle whether the item is a channel, playlist or a video here
@@ -168,7 +165,13 @@ class Results extends Component {
   }
 
   render() {
-    const { searchResults } = this.props;
+    const { isLoaded, error, searchResults } = this.state;
+    if (error) {
+      return <Error message={error.message} />;
+    }
+    if (!isLoaded) {
+      return <div>Page is loading</div>;
+    }
     return (
       <ResultsWrapper className="results-wrapper">
         <ResultsTitle className="results-title">Results</ResultsTitle>
@@ -216,15 +219,13 @@ class Results extends Component {
   }
 }
 const mapStateToProps = state => ({
-  searchResults: state.searchResults,
-  queue: state.queue,
+  searchTerm: state.term,
 });
 
 const mapDispatchToProps = {
   addToQueueConnect: addToQueue,
   playConnect: play,
   updateNowPlayingTitleConnect: updateNowPlayingTitle,
-  addSearchResultsConnect: addSearchResults,
 };
 
 export default connect(

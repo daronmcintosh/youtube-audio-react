@@ -1,9 +1,12 @@
-import React, { Component } from 'react';
-import styled from 'styled-components';
+import axios from 'axios';
 import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import { ContextMenu, ContextMenuTrigger, MenuItem } from 'react-contextmenu';
 import { connect } from 'react-redux';
-import { ContextMenu, MenuItem, ContextMenuTrigger } from 'react-contextmenu';
+import styled from 'styled-components';
 import { addToQueue, play, updateNowPlayingTitle } from '../redux/actions';
+
+import Error from './Error';
 
 const HomeWrapper = styled.div`
   margin: 70px auto 120px auto;
@@ -84,15 +87,20 @@ class Home extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { trendingVideos: [] };
+    this.state = { isLoaded: false, error: null, trendingVideos: [] };
     this.addSongToQueue = this.addSongToQueue.bind(this);
     this.playSong = this.playSong.bind(this);
   }
 
   componentDidMount() {
-    fetch('/trending')
-      .then(res => res.json())
-      .then(data => this.setState({ trendingVideos: data }));
+    axios
+      .get('/trending')
+      .then((result) => {
+        this.setState({ isLoaded: true, trendingVideos: result.data });
+      })
+      .catch((err) => {
+        this.setState({ isLoaded: true, error: err });
+      });
   }
 
   playSong(videoId, title) {
@@ -109,7 +117,13 @@ class Home extends Component {
   }
 
   render() {
-    const { trendingVideos } = this.state;
+    const { isLoaded, error, trendingVideos } = this.state;
+    if (error) {
+      return <Error message={error.message} />;
+    }
+    if (!isLoaded) {
+      return <div>Page is loading</div>;
+    }
     return (
       <HomeWrapper className="home-wrapper">
         <CountryTrendingVideosTitle className="country-trending-videos-title">
