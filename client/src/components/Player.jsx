@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styled, { css } from 'styled-components';
+import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import plyr from 'plyr';
 import {
   play, pause, updateNowPlayingTitle, previousSong, nextSong,
-} from '../actions';
+} from '../redux/actions';
 
 const controls = `
   <div class="plyr__controls" style="width: 75%; margin: 0 auto; background: none; color: #FFFFFF">
@@ -29,47 +30,46 @@ const controls = `
   `;
 
 const PlayerContainer = styled.div`
-width: 100%;
-position: fixed;
-bottom: 0;
-right: 0;
-z-index: 2;
-text-align: center;
-background-color: #343A40;
-color: #FFFFFF;
-padding-top: 10px;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  z-index: 2;
+  text-align: center;
+  background-color: #343a40;
+  color: #ffffff;
+  padding-top: 10px;
 
-@media (max-width: 768px) {
-.player-container {
-padding: 0;
-}
+  @media (max-width: 768px) {
+    .player-container {
+      padding: 0;
+    }
 
-.plyr__control,
-.plyr__volume {
-display: none;
-}
+    .plyr__control,
+    .plyr__volume {
+      display: none;
+    }
 
-.plyr__controls {
-width: 100% !important;
-}
+    .plyr__controls {
+      width: 100% !important;
+    }
 
-.song-info {
-font-size: 1.0em;
-}
-}
+    .song-info {
+      font-size: 1em;
+    }
+  }
 `;
 
 const SongInfo = styled.div`
-  color: #FFFFFF;
+  color: #ffffff;
   padding-bottom: 5px;
 `;
 
-const SongTitle = styled.div`
-`;
+const SongTitle = styled.div``;
 
 const PlayerControls = styled.div`
   margin-bottom: 5px;
-  color: #FFFFFF;
+  color: #ffffff;
 `;
 
 const FontAwesomeButton = styled.button`
@@ -80,12 +80,26 @@ const FontAwesomeButton = styled.button`
   font: inherit;
   cursor: pointer;
   outline: inherit;
-  ${props => props.disabled && css`
-  color: red !important;
-  `};
+  ${props => props.disabled
+    && css`
+      color: red !important;
+    `};
 `;
 
 class Player extends Component {
+  static propTypes = {
+    player: PropTypes.shape({
+      currentSongIndex: PropTypes.number.isRequired,
+      isPlaying: PropTypes.bool.isRequired,
+    }).isRequired,
+    playConnect: PropTypes.func.isRequired,
+    pauseConnect: PropTypes.func.isRequired,
+    updateNowPlayingTitleConnect: PropTypes.func.isRequired,
+    previousSongConnect: PropTypes.func.isRequired,
+    nextSongConnect: PropTypes.func.isRequired,
+    queue: PropTypes.arrayOf(PropTypes.object).isRequired,
+  };
+
   constructor(props) {
     super(props);
     this.togglePlayPause = this.togglePlayPause.bind(this);
@@ -97,9 +111,19 @@ class Player extends Component {
     new plyr('#audio-player', { controls });
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { player } = this.props;
+    if (player.isPlaying !== nextProps.player.isPlaying) {
+      return true;
+    }
+    // no re-rendering is required
+    return false;
+  }
+
   componentDidUpdate() {
+    const { player } = this.props;
     const audio = document.querySelector('#audio-player');
-    if (this.props.player.isPlaying) {
+    if (player.isPlaying) {
       audio.play();
     } else {
       audio.pause();
@@ -107,54 +131,64 @@ class Player extends Component {
   }
 
   togglePlayPause() {
-    if (this.props.player.isPlaying) {
-      this.props.pause();
-    } else if (this.props.player.videoId !== 0) {
-      this.props.play(this.props.player.videoId);
+    const { player, playConnect, pauseConnect } = this.props;
+    if (player.isPlaying) {
+      pauseConnect();
+    } else if (player.videoId !== 0) {
+      playConnect(player.videoId);
     }
   }
 
   previousSong() {
-    if (this.props.player.currentSongIndex > 0) {
-      this.props.previousSong();
-      this.props.play(this.props.queue[this.props.player.currentSongIndex].videoId);
-      this.props.updateNowPlayingTitle(this.props.queue[this.props.player.currentSongIndex].title);
+    const {
+      player,
+      playConnect,
+      previousSongConnect,
+      updateNowPlayingTitleConnect,
+      queue,
+    } = this.props;
+    if (player.currentSongIndex > 0) {
+      previousSongConnect();
+      playConnect(queue[player.currentSongIndex].videoId);
+      updateNowPlayingTitleConnect(queue[player.currentSongIndex].title);
     }
   }
 
   nextSong() {
-    if (this.props.queue.length > 0 && this.props.player.currentSongIndex + 1 !== this.props.queue.length) {
-      this.props.nextSong();
-      this.props.play(this.props.queue[this.props.player.currentSongIndex].videoId);
-      this.props.updateNowPlayingTitle(this.props.queue[this.props.player.currentSongIndex].title);
+    const {
+      playConnect,
+      queue,
+      player,
+      nextSongConnect,
+      updateNowPlayingTitleConnect,
+    } = this.props;
+    if (queue.length > 0 && player.currentSongIndex + 1 !== queue.length) {
+      nextSongConnect();
+      playConnect(queue[player.currentSongIndex].videoId);
+      updateNowPlayingTitleConnect(queue[player.currentSongIndex].title);
     }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (this.props.player.isPlaying !== nextProps.player.isPlaying) {
-      return true;
-    }
-    // no re-rendering is required
-    return false;
   }
 
   render() {
+    const {
+      player, queue, playConnect, pauseConnect,
+    } = this.props;
     // Logic to disable previous and/or next buttons depending on the queue
     let previousDisabled = true;
     let nextDisabled = true;
-    if (this.props.player.currentSongIndex === -1) {
+    if (player.currentSongIndex === -1) {
       previousDisabled = true;
       nextDisabled = true;
     }
-    if (this.props.player.currentSongIndex > 0) {
+    if (player.currentSongIndex > 0) {
       previousDisabled = false;
     }
-    if (this.props.queue.length > 0 && this.props.player.currentSongIndex + 1 !== this.props.queue.length) {
+    if (queue.length > 0 && player.currentSongIndex + 1 !== queue.length) {
       nextDisabled = false;
     }
     // Logic to determine which icon is shown based on whether music is playing or not
     let playPauseIcon;
-    if (this.props.player.isPlaying) {
+    if (player.isPlaying) {
       playPauseIcon = <FontAwesomeIcon icon="pause" size="2x" fixedWidth />;
     } else {
       playPauseIcon = <FontAwesomeIcon icon="play" size="2x" fixedWidth />;
@@ -162,24 +196,32 @@ class Player extends Component {
     return (
       <PlayerContainer className="player-container">
         <SongInfo className="song-info">
-          <SongTitle className="song-title">{this.props.player.title}</SongTitle>
+          <SongTitle className="song-title">{player.title}</SongTitle>
         </SongInfo>
         <PlayerControls className="player-controls">
-          <FontAwesomeButton className="font-awesome-button" onClick={this.previousSong} disabled={previousDisabled}>
+          <FontAwesomeButton
+            className="font-awesome-button"
+            onClick={this.previousSong}
+            disabled={previousDisabled}
+          >
             <FontAwesomeIcon icon="step-backward" size="2x" />
           </FontAwesomeButton>
           <FontAwesomeButton className="font-awesome-button" onClick={this.togglePlayPause}>
             {playPauseIcon}
           </FontAwesomeButton>
-          <FontAwesomeButton className="font-awesome-button" onClick={this.nextSong} disabled={nextDisabled}>
+          <FontAwesomeButton
+            className="font-awesome-button"
+            onClick={this.nextSong}
+            disabled={nextDisabled}
+          >
             <FontAwesomeIcon icon="step-forward" size="2x" />
           </FontAwesomeButton>
         </PlayerControls>
         <audio
           id="audio-player"
-          src={`/api/play/${this.props.player.videoId}`}
-          onPlay={() => this.props.play(this.props.player.videoId)}
-          onPause={() => this.props.pause()}
+          src={`/api/play/${player.videoId}`}
+          onPlay={() => playConnect(player.videoId)}
+          onPause={() => pauseConnect()}
           preload="none"
         />
       </PlayerContainer>
@@ -192,22 +234,15 @@ const mapStateToProps = state => ({
   player: state.player,
 });
 
-const mapDispatchToProps = dispatch => ({
-  play: (videoId) => {
-    dispatch(play(videoId));
-  },
-  pause: () => {
-    dispatch(pause());
-  },
-  updateNowPlayingTitle: (title) => {
-    dispatch(updateNowPlayingTitle(title));
-  },
-  previousSong: () => {
-    dispatch(previousSong());
-  },
-  nextSong: () => {
-    dispatch(nextSong());
-  },
-});
+const mapDispatchToProps = {
+  playConnect: play,
+  pauseConnect: pause,
+  updateNowPlayingTitleConnect: updateNowPlayingTitle,
+  previousSongConnect: previousSong,
+  nextSongConnect: nextSong,
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(Player);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Player);

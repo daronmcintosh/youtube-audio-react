@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styled, { css } from 'styled-components';
+import PropTypes from 'prop-types';
 
 import { ContextMenu, MenuItem, ContextMenuTrigger } from 'react-contextmenu';
 import {
   addToQueue, play, updateNowPlayingTitle, addSearchResults,
-} from '../actions';
+} from '../redux/actions';
 
 const ResultsWrapper = styled.div`
   margin: 70px auto 120px auto;
@@ -116,6 +117,15 @@ const SearchResultDescription = styled.div`
 `;
 
 class Results extends Component {
+  static propTypes = {
+    location: PropTypes.shape({ search: PropTypes.func.isRequired }).isRequired,
+    addSearchResultsConnect: PropTypes.func.isRequired,
+    playConnect: PropTypes.func.isRequired,
+    updateNowPlayingTitleConnect: PropTypes.func.isRequired,
+    addToQueueConnect: PropTypes.func.isRequired,
+    searchResults: PropTypes.arrayOf(PropTypes.object).isRequired,
+  };
+
   constructor(props) {
     super(props);
     this.handleLinkClick = this.handleLinkClick.bind(this);
@@ -123,22 +133,25 @@ class Results extends Component {
   }
 
   componentDidMount() {
-    const searchQuery = this.props.location.search.split('=')[1];
+    // Has access to location because it uses the 'Route' component
+    const { location, addSearchResultsConnect } = this.props;
+    const searchQuery = location.search.split('=')[1];
     fetch(`/results?searchQuery=${searchQuery}`)
       .then(res => res.json())
-      .then(data => this.props.addSearchResults(data));
+      .then(data => addSearchResultsConnect(data));
   }
 
   // TODO: Remove this because it is deprecated as of 16.3
-  componentWillUnmount() {
-    this.props.addSearchResults([]);
-  }
+  // componentWillUnmount() {
+  //   this.props.addSearchResults([]);
+  // }
 
   handleLinkClick(videoId, title, kind) {
     // TODO: handle whether the item is a channel, playlist or a video here
+    const { playConnect, updateNowPlayingTitleConnect } = this.props;
     if (kind.includes('video')) {
-      this.props.play(videoId);
-      this.props.updateNowPlayingTitle(title);
+      playConnect(videoId);
+      updateNowPlayingTitleConnect(title);
     } else if (kind.includes('playlist')) {
       // playlist
     } else if (kind.includes('channel')) {
@@ -150,16 +163,18 @@ class Results extends Component {
   addSongToQueue(e, data, target) {
     const id = target.firstElementChild.getAttribute('data-videoid');
     const title = target.firstElementChild.getAttribute('data-videotitle');
-    this.props.addToQueue(id, title);
+    const { addToQueueConnect } = this.props;
+    addToQueueConnect(id, title);
   }
 
   render() {
+    const { searchResults } = this.props;
     return (
       <ResultsWrapper className="results-wrapper">
         <ResultsTitle className="results-title">Results</ResultsTitle>
         <HorizontalRule className="horizontal-rule" />
         <SearchResultsWrapper className="search-results-wrapper">
-          {this.props.searchResults.map(result => (
+          {searchResults.map(result => (
             <div key={result.id}>
               <ContextMenuTrigger id="Context-Menu">
                 <SearchResult
@@ -205,20 +220,12 @@ const mapStateToProps = state => ({
   queue: state.queue,
 });
 
-const mapDispatchToProps = dispatch => ({
-  addToQueue: (videoId, title) => {
-    dispatch(addToQueue(videoId, title));
-  },
-  play: (videoId) => {
-    dispatch(play(videoId));
-  },
-  updateNowPlayingTitle: (title) => {
-    dispatch(updateNowPlayingTitle(title));
-  },
-  addSearchResults: (searchResults) => {
-    dispatch(addSearchResults(searchResults));
-  },
-});
+const mapDispatchToProps = {
+  addToQueueConnect: addToQueue,
+  playConnect: play,
+  updateNowPlayingTitleConnect: updateNowPlayingTitle,
+  addSearchResultsConnect: addSearchResults,
+};
 
 export default connect(
   mapStateToProps,

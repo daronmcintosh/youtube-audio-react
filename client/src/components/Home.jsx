@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { ContextMenu, MenuItem, ContextMenuTrigger } from 'react-contextmenu';
-import { addToQueue, play, updateNowPlayingTitle } from '../actions';
-
+import { addToQueue, play, updateNowPlayingTitle } from '../redux/actions';
 
 const HomeWrapper = styled.div`
   margin: 70px auto 120px auto;
@@ -31,9 +31,9 @@ const CountryTrendingVideosTitle = styled.div`
 
 const HorizontalRule = styled.hr`
   border: 0;
-    height: 1px;
-    background: #333;
-    background-image: linear-gradient(to right, #ccc, #333, #ccc);
+  height: 1px;
+  background: #333;
+  background-image: linear-gradient(to right, #ccc, #333, #ccc);
   margin-bottom: 1rem;
 `;
 
@@ -76,6 +76,12 @@ const TrendingVideoTitle = styled.div`
 `;
 
 class Home extends Component {
+  static propTypes = {
+    addToQueueConnect: PropTypes.func.isRequired,
+    playConnect: PropTypes.func.isRequired,
+    updateNowPlayingTitleConnect: PropTypes.func.isRequired,
+  };
+
   constructor(props) {
     super(props);
     this.state = { trendingVideos: [] };
@@ -90,17 +96,20 @@ class Home extends Component {
   }
 
   playSong(videoId, title) {
-    this.props.play(videoId);
-    this.props.updateNowPlayingTitle(title);
+    const { playConnect, updateNowPlayingTitleConnect } = this.props;
+    playConnect(videoId);
+    updateNowPlayingTitleConnect(title);
   }
 
   addSongToQueue(e, data, target) {
     const id = target.firstElementChild.getAttribute('data-videoid');
     const title = target.firstElementChild.getAttribute('data-videotitle');
-    this.props.addToQueue(id, title);
+    const { addToQueueConnect } = this.props;
+    addToQueueConnect(id, title);
   }
 
   render() {
+    const { trendingVideos } = this.state;
     return (
       <HomeWrapper className="home-wrapper">
         <CountryTrendingVideosTitle className="country-trending-videos-title">
@@ -108,7 +117,7 @@ class Home extends Component {
         </CountryTrendingVideosTitle>
         <HorizontalRule className="horizantal-rule" />
         <TrendingVideosWrapper className="trending-videos-wrapper">
-          {this.state.trendingVideos.map(video => (
+          {trendingVideos.map(video => (
             <div key={video.id}>
               <ContextMenuTrigger id="Context-Menu">
                 <TrendingVideo
@@ -117,10 +126,7 @@ class Home extends Component {
                   data-videotitle={video.title}
                   onClick={() => this.playSong(video.id, video.title)}
                 >
-                  <TrendingVideoImg
-                    className="trending-video-img"
-                    src={video.imgSrc}
-                  />
+                  <TrendingVideoImg className="trending-video-img" src={video.imgSrc} />
                   <TrendingVideoTitle className="trending-video-title">
                     {video.title}
                   </TrendingVideoTitle>
@@ -137,16 +143,13 @@ class Home extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  addToQueue: (videoId, title) => {
-    dispatch(addToQueue(videoId, title));
-  },
-  play: (videoId) => {
-    dispatch(play(videoId));
-  },
-  updateNowPlayingTitle: (title) => {
-    dispatch(updateNowPlayingTitle(title));
-  },
-});
+const mapDispatchToProps = {
+  addToQueueConnect: addToQueue,
+  playConnect: play,
+  updateNowPlayingTitleConnect: updateNowPlayingTitle,
+};
 
-export default connect(null, mapDispatchToProps)(Home);
+export default connect(
+  null,
+  mapDispatchToProps,
+)(Home);
