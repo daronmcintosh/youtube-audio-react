@@ -1,18 +1,23 @@
-import React from 'react';
-import styled, { createGlobalStyle } from 'styled-components';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
-  faSearch, faPlay, faPause, faStepForward, faStepBackward, faHome,
-} from
-  '@fortawesome/free-solid-svg-icons';
+  faHome,
+  faPause,
+  faPlay,
+  faSearch,
+  faStepBackward,
+  faStepForward,
+} from '@fortawesome/free-solid-svg-icons';
+import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Search from './Search';
-import Player from './Player';
+import styled, { createGlobalStyle } from 'styled-components';
+
+import Error from './Error';
 import Home from './Home';
+import Player from './Player';
 import Results from './Results';
-import InvalidPage from './404';
+import Search from './Search';
 
-
+// Only these icons will be available for use
 library.add(faSearch, faPlay, faPause, faStepBackward, faStepForward, faHome);
 
 const GlobalStyle = createGlobalStyle`
@@ -99,11 +104,9 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const RouteWrapper = styled.div`
-`;
+const RouteWrapper = styled.div``;
 
-const AppWrapper = styled.div`
-`;
+const AppWrapper = styled.div``;
 
 function App() {
   return (
@@ -117,7 +120,7 @@ function App() {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/results" component={Results} />
-          <Route component={InvalidPage} />
+          <Route render={() => <Error message="Page does not Exist" />} />
         </Switch>
       </RouteWrapper>
     </Router>
