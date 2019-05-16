@@ -25,6 +25,8 @@ youtube-audio-react:
     ☐ Use related videos to continue playing songs when the nothing is left in the queue
 
   Bugs:
+    ☐ Queue is broken at the moment
+      For some reason it doesn't work with sending the new state as just +1, it needs +=1 to work
     ☐ Fix error where user seeks a lot on a section that isn't buffered and results in some type of infinite loop.
       Causes the web page to slow down drastically until refresh
     ☐ Fix this:Uncaught (in promise) DOMException: The play() request was interrupted by a new load request.
@@ -48,10 +50,12 @@ youtube-audio-react:
         Use the url from the format that is chosen so that livestreams and normal videos work out of the box
         The only thing that is really needed in info is whether or not it is a live stream, content length
         https://github.com/JamesKyburz/youtube-audio-stream
-    ☐ Fix all eslint errors
+    ✔ Fix all eslint errors @done(19-05-15 23:58)
+    ☐ Check to ensure all the propTypes hold
     ☐ Add error handling to all promises on client and server
-    ☐ Remove console.logs
+    ✔ Remove console.logs @done(19-05-16 00:35)
     ☐ Update README's
+    ✔ Update redux to the new API or use React's official state management @done(19-05-16 00:35)
     ✔ Redo TODO @done(19-05-07 15:56)
       ✔ Separate into categories: UI, Features, Bugs, Enhancements, Archive @done(19-05-07 15:56)
     ✔ Move all current completed, cancelled items to archive @done(19-05-07 15:39)
