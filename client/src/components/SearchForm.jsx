@@ -1,11 +1,11 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { connect } from 'react-redux';
-import { addSearchResults } from '../redux/actions';
+import { setSearchTerm } from '../redux/actions';
 
 const Form = styled.form`
   margin: 0 auto;
@@ -39,12 +39,10 @@ class SearchForm extends Component {
 
   handleSubmit(event) {
     const { searchTerm } = this.state;
-    const { addSearchResultsConnect, history } = this.props;
+    const { setSearchTermConnect, history } = this.props;
 
     event.preventDefault();
-    fetch(`/results?searchQuery=${searchTerm}`)
-      .then(res => res.json())
-      .then(data => addSearchResultsConnect(data));
+    setSearchTermConnect(searchTerm);
     history.push(`/results?searchQuery=${searchTerm}`);
   }
 
@@ -73,9 +71,9 @@ class SearchForm extends Component {
 }
 
 SearchForm.propTypes = {
-  addSearchResultsConnect: PropTypes.func.isRequired,
+  setSearchTermConnect: PropTypes.func.isRequired,
 };
-const mapDispatchToProps = { addSearchResultsConnect: addSearchResults };
+const mapDispatchToProps = { setSearchTermConnect: setSearchTerm };
 
 export default withRouter(
   connect(

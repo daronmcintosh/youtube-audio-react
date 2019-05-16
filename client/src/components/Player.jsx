@@ -1,11 +1,12 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import plyr from 'plyr';
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styled, { css } from 'styled-components';
-import PropTypes from 'prop-types';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import plyr from 'plyr';
+
 import {
-  play, pause, updateNowPlayingTitle, previousSong, nextSong,
+  nextSong, pause, play, previousSong, updateNowPlayingTitle,
 } from '../redux/actions';
 
 const controls = `

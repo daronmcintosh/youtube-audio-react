@@ -1,12 +1,13 @@
-import React from 'react';
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+
 import SearchForm from './SearchForm';
 
 const SearchNav = styled.nav`
   display: flex;
-  background-color: #343A40;
+  background-color: #343a40;
   top: 0;
   right: 0;
   left: 0;
@@ -16,24 +17,24 @@ const SearchNav = styled.nav`
 `;
 
 const HomeButton = styled(Link)`
-  color: #FFFFFF;
+  color: #ffffff;
   text-decoration: none;
   display: inline-block;
-  padding-top: .3125rem;
-  padding-bottom: .3125rem;
+  padding-top: 0.3125rem;
+  padding-bottom: 0.3125rem;
   margin-right: 1rem;
   font-size: 1.25rem;
   line-height: inherit;
   white-space: nowrap;
   @media (max-width: 768px) {
-  .search-nav-home-button-text {
-    display: none;
-  }
+    .search-nav-home-button-text {
+      display: none;
+    }
   }
 `;
 
 const FontAwesomeIconWrapper = styled(FontAwesomeIcon)`
-  color: #FFFFFF;
+  color: #ffffff;
   display: none;
   @media (max-width: 768px) {
     display: block;
