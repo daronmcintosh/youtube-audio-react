@@ -2,10 +2,13 @@
   "env": {
     "browser": true
   },
+  "parser": "babel-eslint",
+  "plugins": ["babel"],
   "parserOptions": {
     "sourceType": "module",
     "ecmaFeatures": {
       "jsx": true
     }
-  }
+  },
+  "rules": { "jsx-a11y/media-has-caption": "off" }
 }
