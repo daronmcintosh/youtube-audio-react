@@ -15,8 +15,10 @@ youtube-audio-react:
   Features:
     ☐ Implement playlists
       ☐ Create feature to add a whole playlist to the queue
+      ☐ Playlists should be cached
     ☐ Implement channels
       ☐ Show a list of playlists and videos
+      ☐ Channels should be cached
     ☐ Use intro.js or something similar to give new users an introduction to the different features
       Save a cookie that simple says newUser:true in the client's browser to determine
       whether to give introduction or look in intro.js docs if they have something already
@@ -32,7 +34,6 @@ youtube-audio-react:
     ☐ Fix this:Uncaught (in promise) DOMException: The play() request was interrupted by a new load request.
       It happens when you skip a track while the current is still loading
     ☐ HPE_INVALID_CONSTANT causes ERR_CONTENT_LENGTH_MISMATCHED or vice versa.
-    ✔ Duplicate requests made when searching @done(19-05-16 13:19)
 
   Enhancements:
     ☐ Everything that gets plays has to go through the queue first
@@ -41,28 +42,36 @@ youtube-audio-react:
     ☐ Update all dependencies to the latest versions
     ☐ Implement a better logic for switching play pause button
     ☐ Use same method used in Results component to get seemingly higher resolution images on main page
+    ☐ Cache data from youtube's api
+      ☐ Cache the trending page and refresh the cache every 24 hours
+      ☐ Figure out a way to cache the search results since that counts more towards the quota.
+      ☐ If it is hard to cache search results, disable search when quota has been reach and have users rely on their playlists
+    ☐ Check to ensure all the propTypes hold
+    ☐ Add form validation to search
 
   Development:
-    ✔ Consider publishing stream.js since it shares code between two projects and it would make it easier to maintain @done(19-05-11 16:05)
-      Published to the npm registry under the package name @isolution/youtube-audio-stream
-    ✘ Implement live streams into youtube-audio-stream by submitting a pull request @cancelled(19-05-11 16:05)
-      ✘ Use ytld.getInfo() to retrieve meta data and return that in the 'stream' object (stream.info) @cancelled(19-05-11 16:05)
-        Use the url from the format that is chosen so that livestreams and normal videos work out of the box
-        The only thing that is really needed in info is whether or not it is a live stream, content length
-        https://github.com/JamesKyburz/youtube-audio-stream
-    ✔ Fix all eslint errors @done(19-05-15 23:58)
-    ☐ Check to ensure all the propTypes hold
-    ☐ Add error handling to all promises on client and server
     ☐ Look into the impack of using async await on performance
-    ✔ Remove console.logs @done(19-05-16 00:35)
     ☐ Update README's
-    ✔ Update redux to the new API or use React's official state management @done(19-05-16 00:35)
-    ✔ Redo TODO @done(19-05-07 15:56)
-      ✔ Separate into categories: UI, Features, Bugs, Enhancements, Archive @done(19-05-07 15:56)
-    ✔ Move all current completed, cancelled items to archive @done(19-05-07 15:39)
-    ✔ Add launch.json configurations for debugging backend and frontend @done(19-05-07 15:37)
+    ☐ Update heroku to the new stack(heroku-18) OR use TravisCI and docker containers to deploy to heroku
+    ☐ Fix Build tasks
 
   Archive:
+    ✔ Duplicate requests made when searching @done(19-05-16 13:19) @project(youtube-audio-react.Bugs)
+    ✔ Consider publishing stream.js since it shares code between two projects and it would make it easier to maintain @done(19-05-11 16:05) @project(youtube-audio-react.Development)
+      Published to the npm registry under the package name @isolution/youtube-audio-stream
+    ✘ Implement live streams into youtube-audio-stream by submitting a pull request @cancelled(19-05-11 16:05) @project(youtube-audio-react.Development)
+    ✘ Use ytld.getInfo() to retrieve meta data and return that in the 'stream' object (stream.info) @cancelled(19-05-11 16:05) @project(youtube-audio-react.Development)
+      Use the url from the format that is chosen so that livestreams and normal videos work out of the box
+      The only thing that is really needed in info is whether or not it is a live stream, content length
+      https://github.com/JamesKyburz/youtube-audio-stream
+    ✔ Fix all eslint errors @done(19-05-15 23:58) @project(youtube-audio-react.Development)
+    ✔ Add error handling to all promises on client and server @done(19-05-17 00:00) @project(youtube-audio-react.Development)
+    ✔ Remove console.logs @done(19-05-16 00:35) @project(youtube-audio-react.Development)
+    ✔ Update redux to the new API or use React's official state management @done(19-05-16 00:35) @project(youtube-audio-react.Development)
+    ✔ Redo TODO @done(19-05-07 15:56) @project(youtube-audio-react.Development)
+    ✔ Separate into categories: UI, Features, Bugs, Enhancements, Archive @done(19-05-07 15:56) @project(youtube-audio-react.Development)
+    ✔ Move all current completed, cancelled items to archive @done(19-05-07 15:39) @project(youtube-audio-react.Development)
+    ✔ Add launch.json configurations for debugging backend and frontend @done(19-05-07 15:37) @project(youtube-audio-react.Development)
     ✔ use redux to manage the state(playlist, queuing, singles etc) @done(19-05-07 15:38)
     ✔ use componentDidMount to make sure a route always renders what it is suppose to eg: results?searchQuery=hello @done(18-08-29 14:12)
     ✘ use redux to determine what is rendered in the main body, etc, search, channel(videos or playlists) @cancelled(18-08-29 14:19)
