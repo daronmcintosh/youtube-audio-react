@@ -1,9 +1,9 @@
 import { SET_SEARCH_TERM } from '../actionTypes';
 
-const searchTerm = (state = [], action) => {
+const searchTerm = (state = '', action) => {
   switch (action.type) {
     case SET_SEARCH_TERM:
-      return action.term;
+      return action.searchTerm;
     default:
       return state;
   }

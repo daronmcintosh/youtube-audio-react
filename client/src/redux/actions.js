@@ -8,9 +8,9 @@ import {
   NEXT_SONG,
 } from './actionTypes';
 
-export const setSearchTerm = term => ({
+export const setSearchTerm = searchTerm => ({
   type: SET_SEARCH_TERM,
-  term,
+  searchTerm,
 });
 
 export const addToQueue = (videoId, title) => ({

@@ -218,8 +218,9 @@ class Results extends Component {
     );
   }
 }
+
 const mapStateToProps = state => ({
-  searchTerm: state.term,
+  searchTerm: state.searchTerm,
 });
 
 const mapDispatchToProps = {

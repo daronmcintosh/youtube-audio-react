@@ -28,7 +28,13 @@ const SearchButton = styled.button`
 `;
 
 class SearchForm extends Component {
-  static propTypes = { history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired };
+  static propTypes = {
+    setSearchTermConnect: PropTypes.func.isRequired,
+    history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
+    location: PropTypes.shape({
+      search: PropTypes.string.isRequired,
+    }).isRequired,
+  };
 
   constructor(props) {
     super(props);
@@ -37,13 +43,21 @@ class SearchForm extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  handleSubmit(event) {
-    const { searchTerm } = this.state;
-    const { setSearchTermConnect, history } = this.props;
+  componentDidMount() {
+    const { location } = this.props;
+    // Set the text in the search box based on the location
+    if (location.search !== '') {
+      const term = location.search.split('=')[1];
+      this.setState({ searchTerm: term });
+    }
+  }
 
+  handleSubmit(event) {
+    const { setSearchTermConnect, history } = this.props;
+    const { searchTerm } = this.state;
     event.preventDefault();
-    setSearchTermConnect(searchTerm);
     history.push(`/results?searchQuery=${searchTerm}`);
+    setSearchTermConnect(searchTerm);
   }
 
   handleChange(event) {
