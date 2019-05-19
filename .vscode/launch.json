@@ -39,11 +39,17 @@
       "restart": true,
       "console": "integratedTerminal",
       "serverReadyAction": {
-        "pattern": "Compiled successfully!",
+        "pattern": "Compiled",
         "action": "debugWithChrome",
         "uriFormat": "http://localhost:3000",
         "webRoot": "${workspaceFolder}/client"
       }
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Debug Server/Client v2",
+      "configurations": ["Debug Server", "Debug Client"]
     }
   ]
 }
