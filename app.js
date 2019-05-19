@@ -6,6 +6,7 @@ const morgan = require('morgan');
 const helmet = require('helmet');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const cache = require('memory-cache');
 const youtubeAudioStream = require('@isolution/youtube-audio-stream');
 const apiRequest = require('./apiRequest');
 const config = require('./config');
@@ -19,6 +20,22 @@ app.use(sslRedirect());
 app.use(bodyParser.json());
 app.use(morgan('dev'));
 app.use(express.static(path.join(__dirname, 'client/build')));
+
+// Middleware to cache response for a specific amount of seconds
+const cacheMiddleware = duration => (req, res, next) => {
+  const key = `__express__${req.originalUrl || req.url}`;
+  const cachedBody = cache.get(key);
+  if (cachedBody) {
+    res.send(cachedBody);
+  } else {
+    res.sendResponse = res.send;
+    res.send = (body) => {
+      cache.put(key, body, duration * 1000);
+      res.sendResponse(body);
+    };
+    next();
+  }
+};
 
 // Audio Route
 app.get('/api/play/:videoId', (req, res, next) => {
@@ -64,8 +81,8 @@ app.get('/results', (req, res, next) => {
     });
 });
 
-// Trending Route
-app.get('/trending', (req, res, next) => {
+// Trending Route - caches response for 24hrs
+app.get('/trending', cacheMiddleware(86400), (req, res, next) => {
   apiRequest
     .buildTrendingVideos()
     .then((results) => {
