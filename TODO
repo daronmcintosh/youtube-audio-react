@@ -43,9 +43,9 @@ youtube-audio-react:
     ☐ Implement a better logic for switching play pause button
     ☐ Use same method used in Results component to get seemingly higher resolution images on main page
     ☐ Cache data from youtube's api
-      ☐ Cache the trending page and refresh the cache every 24 hours
+      ✔ Cache the trending page and refresh the cache every 24 hours @done(19-05-18 21:47)
       ☐ Figure out a way to cache the search results since that counts more towards the quota.
-      ☐ If it is hard to cache search results, disable search when quota has been reach and have users rely on their playlists
+        If it is hard to cache search results, disable search when quota has been reach and have users rely on their playlists
     ☐ Check to ensure all the propTypes hold
     ☐ Add form validation to search
 
@@ -53,7 +53,7 @@ youtube-audio-react:
     ☐ Look into the impack of using async await on performance
     ☐ Update README's
     ☐ Update heroku to the new stack(heroku-18) OR use TravisCI and docker containers to deploy to heroku
-    ☐ Fix Build tasks
+    ✔ Improve how 'Debug Client' works @done(19-05-17 14:08)
 
   Archive:
     ✔ Duplicate requests made when searching @done(19-05-16 13:19) @project(youtube-audio-react.Bugs)
