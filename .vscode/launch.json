@@ -7,9 +7,10 @@
     {
       "type": "chrome",
       "request": "launch",
-      "name": "Debug Chrome",
+      "name": "Debug Client",
       "url": "http://localhost:3000",
-      "webRoot": "${workspaceFolder}"
+      "webRoot": "${workspaceFolder}/client",
+      "preLaunchTask": "Start Client"
     },
     {
       "type": "node",
