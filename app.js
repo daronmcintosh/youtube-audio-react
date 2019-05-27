@@ -69,8 +69,8 @@ app.get('/api/play/:videoId', (req, res, next) => {
     });
 });
 
-// Search Route
-app.get('/results', (req, res, next) => {
+// Search Route - cache response for 24hrs
+app.get('/results', cacheMiddleware(86400), (req, res, next) => {
   apiRequest
     .buildSearch(req.query.searchQuery)
     .then((searchResults) => {
