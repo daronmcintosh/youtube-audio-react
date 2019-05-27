@@ -129,10 +129,22 @@ class Results extends Component {
     this.state = { isLoaded: false, error: null, searchResults: [] };
     this.handleLinkClick = this.handleLinkClick.bind(this);
     this.addSongToQueue = this.addSongToQueue.bind(this);
+    this.fetchResults = this.fetchResults.bind(this);
   }
 
   componentDidMount() {
     const { searchTerm } = this.props;
+    this.fetchResults(searchTerm);
+  }
+
+  componentDidUpdate(prevProps) {
+    const { searchTerm } = this.props;
+    if (prevProps.searchTerm !== searchTerm) {
+      this.fetchResults(searchTerm);
+    }
+  }
+
+  fetchResults(searchTerm) {
     axios
       .get(`/results?searchQuery=${searchTerm}`)
       .then((result) => {
@@ -218,6 +230,7 @@ class Results extends Component {
           ))}
           <ContextMenu id="Context-Menu">
             <MenuItem onClick={this.addSongToQueue}>Add to Queue</MenuItem>
+            <MenuItem onClick={this.playSongNext}>Play Next</MenuItem>
           </ContextMenu>
         </SearchResultsWrapper>
       </ResultsWrapper>
