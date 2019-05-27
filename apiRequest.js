@@ -19,32 +19,34 @@ async function buildSearch(query) {
   const { items } = result.data;
 
   items.forEach((item) => {
-    const searchObj = {};
-    const { kind } = item.id;
-    if (kind === 'youtube#video') {
-      searchObj.id = item.id.videoId;
-      searchObj.kind = 'video';
+    if (item.snippet.liveBroadcastContent !== 'upcoming') {
+      const searchObj = {};
+      const { kind } = item.id;
+      if (kind === 'youtube#video') {
+        searchObj.id = item.id.videoId;
+        searchObj.kind = 'video';
+      }
+      if (kind === 'youtube#playlist') {
+        searchObj.id = item.id.playlistId;
+        searchObj.kind = 'playlist';
+      }
+      if (kind === 'youtube#channel') {
+        searchObj.id = item.id.channelId;
+        searchObj.kind = 'channel';
+      }
+      searchObj.channelId = item.snippet.channelId;
+      searchObj.title = item.snippet.title;
+      searchObj.channelTitle = item.snippet.channelTitle;
+      let imageUrl;
+      try {
+        imageUrl = item.snippet.thumbnails.maxres.url;
+      } catch (err) {
+        imageUrl = item.snippet.thumbnails.high.url;
+      }
+      searchObj.imgSrc = imageUrl;
+      searchObj.description = item.snippet.description;
+      searchResults.push(searchObj);
     }
-    if (kind === 'youtube#playlist') {
-      searchObj.id = item.id.playlistId;
-      searchObj.kind = 'playlist';
-    }
-    if (kind === 'youtube#channel') {
-      searchObj.id = item.id.channelId;
-      searchObj.kind = 'channel';
-    }
-    searchObj.channelId = item.snippet.channelId;
-    searchObj.title = item.snippet.title;
-    searchObj.channelTitle = item.snippet.channelTitle;
-    let imageUrl;
-    try {
-      imageUrl = item.snippet.thumbnails.maxres.url;
-    } catch (err) {
-      imageUrl = item.snippet.thumbnails.high.url;
-    }
-    searchObj.imgSrc = imageUrl;
-    searchObj.description = item.snippet.description;
-    searchResults.push(searchObj);
   });
   return searchResults;
 }
