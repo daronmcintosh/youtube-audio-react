@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { ContextMenu, ContextMenuTrigger, MenuItem } from 'react-contextmenu';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import { addToQueue, play, updateNowPlayingTitle } from '../redux/actions';
+import { addToQueue, play, playNext } from '../redux/actions';
 
 import Error from './Error';
 
@@ -82,7 +82,7 @@ class Home extends Component {
   static propTypes = {
     addToQueueConnect: PropTypes.func.isRequired,
     playConnect: PropTypes.func.isRequired,
-    updateNowPlayingTitleConnect: PropTypes.func.isRequired,
+    playNextConnect: PropTypes.func.isRequired,
   };
 
   constructor(props) {
@@ -90,6 +90,7 @@ class Home extends Component {
     this.state = { isLoaded: false, error: null, trendingVideos: [] };
     this.addSongToQueue = this.addSongToQueue.bind(this);
     this.playSong = this.playSong.bind(this);
+    this.playSongNext = this.playSongNext.bind(this);
   }
 
   componentDidMount() {
@@ -104,9 +105,8 @@ class Home extends Component {
   }
 
   playSong(videoId, title) {
-    const { playConnect, updateNowPlayingTitleConnect } = this.props;
-    playConnect(videoId);
-    updateNowPlayingTitleConnect(title);
+    const { playConnect } = this.props;
+    playConnect(videoId, title);
   }
 
   addSongToQueue(e, data, target) {
@@ -114,6 +114,13 @@ class Home extends Component {
     const title = target.firstElementChild.getAttribute('data-videotitle');
     const { addToQueueConnect } = this.props;
     addToQueueConnect(id, title);
+  }
+
+  playSongNext(e, data, target) {
+    const id = target.firstElementChild.getAttribute('data-videoid');
+    const title = target.firstElementChild.getAttribute('data-videotitle');
+    const { playNextConnect } = this.props;
+    playNextConnect(id, title);
   }
 
   render() {
@@ -150,6 +157,7 @@ class Home extends Component {
           ))}
           <ContextMenu id="Context-Menu">
             <MenuItem onClick={this.addSongToQueue}>Add to Queue</MenuItem>
+            <MenuItem onClick={this.playSongNext}>Play Next</MenuItem>
           </ContextMenu>
         </TrendingVideosWrapper>
       </HomeWrapper>
@@ -160,7 +168,7 @@ class Home extends Component {
 const mapDispatchToProps = {
   addToQueueConnect: addToQueue,
   playConnect: play,
-  updateNowPlayingTitleConnect: updateNowPlayingTitle,
+  playNextConnect: playNext,
 };
 
 export default connect(

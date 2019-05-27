@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { ContextMenu, ContextMenuTrigger, MenuItem } from 'react-contextmenu';
 import { connect } from 'react-redux';
 import styled, { css } from 'styled-components';
-import { addToQueue, play, updateNowPlayingTitle } from '../redux/actions';
+import { addToQueue, play, playNext } from '../redux/actions';
 
 import Error from './Error';
 
@@ -120,8 +120,8 @@ class Results extends Component {
   static propTypes = {
     addToQueueConnect: PropTypes.func.isRequired,
     playConnect: PropTypes.func.isRequired,
-    updateNowPlayingTitleConnect: PropTypes.func.isRequired,
     searchTerm: PropTypes.string.isRequired,
+    playNextConnect: PropTypes.func.isRequired,
   };
 
   constructor(props) {
@@ -145,10 +145,9 @@ class Results extends Component {
 
   handleLinkClick(videoId, title, kind) {
     // TODO: handle whether the item is a channel, playlist or a video here
-    const { playConnect, updateNowPlayingTitleConnect } = this.props;
+    const { playConnect } = this.props;
     if (kind.includes('video')) {
-      playConnect(videoId);
-      updateNowPlayingTitleConnect(title);
+      playConnect(videoId, title);
     } else if (kind.includes('playlist')) {
       // playlist
     } else if (kind.includes('channel')) {
@@ -162,6 +161,13 @@ class Results extends Component {
     const title = target.firstElementChild.getAttribute('data-videotitle');
     const { addToQueueConnect } = this.props;
     addToQueueConnect(id, title);
+  }
+
+  playSongNext(e, data, target) {
+    const id = target.firstElementChild.getAttribute('data-videoid');
+    const title = target.firstElementChild.getAttribute('data-videotitle');
+    const { playNextConnect } = this.props;
+    playNextConnect(id, title);
   }
 
   render() {
@@ -226,7 +232,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   addToQueueConnect: addToQueue,
   playConnect: play,
-  updateNowPlayingTitleConnect: updateNowPlayingTitle,
+  playNextConnect: playNext,
 };
 
 export default connect(

@@ -27,7 +27,7 @@ youtube-audio-react:
     ☐ Use related videos to continue playing songs when the nothing is left in the queue
 
   Bugs:
-    ☐ Queue is broken at the moment
+    ✔ Fix queue @done(19-05-26 21:53)
       For some reason it doesn't work with sending the new state as just +1, it needs +=1 to work
     ☐ Fix error where user seeks a lot on a section that isn't buffered and results in some type of infinite loop.
       Causes the web page to slow down drastically until refresh
@@ -36,11 +36,11 @@ youtube-audio-react:
     ☐ HPE_INVALID_CONSTANT causes ERR_CONTENT_LENGTH_MISMATCHED or vice versa.
 
   Enhancements:
-    ☐ Everything that gets plays has to go through the queue first
+    ✔ Everything that gets plays has to go through the queue first @done(19-05-26 21:54)
     ☐ Clean up ffmpeg processes that are not in use(socket.io)
     ☐ Check all dependencies to make sure they are being used and needed(script tags included)
     ☐ Update all dependencies to the latest versions
-    ☐ Implement a better logic for switching play pause button
+    ✔ Implement a better logic for switching play pause button @done(19-05-26 22:00)
     ☐ Use same method used in Results component to get seemingly higher resolution images on main page
     ☐ Cache data from youtube's api
       ✔ Cache the trending page and refresh the cache every 24 hours @done(19-05-18 21:47)

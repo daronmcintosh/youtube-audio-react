@@ -1,13 +1,11 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import plyr from 'plyr';
+import Plyr from 'plyr';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styled, { css } from 'styled-components';
 
-import {
-  nextSong, pause, play, previousSong, updateNowPlayingTitle,
-} from '../redux/actions';
+import { nextSong, previousSong } from '../redux/actions';
 
 const controls = `
   <div class="plyr__controls" style="width: 75%; margin: 0 auto; background: none; color: #FFFFFF">
@@ -90,15 +88,12 @@ const FontAwesomeButton = styled.button`
 class Player extends Component {
   static propTypes = {
     player: PropTypes.shape({
-      currentSongIndex: PropTypes.number.isRequired,
-      isPlaying: PropTypes.bool.isRequired,
+      videoId: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      queue: PropTypes.array.isRequired,
     }).isRequired,
-    playConnect: PropTypes.func.isRequired,
-    pauseConnect: PropTypes.func.isRequired,
-    updateNowPlayingTitleConnect: PropTypes.func.isRequired,
-    previousSongConnect: PropTypes.func.isRequired,
     nextSongConnect: PropTypes.func.isRequired,
-    queue: PropTypes.arrayOf(PropTypes.object).isRequired,
+    previousSongConnect: PropTypes.func.isRequired,
   };
 
   constructor(props) {
@@ -106,90 +101,69 @@ class Player extends Component {
     this.togglePlayPause = this.togglePlayPause.bind(this);
     this.previousSong = this.previousSong.bind(this);
     this.nextSong = this.nextSong.bind(this);
+    this.state = { isPlaying: false };
   }
 
   componentDidMount() {
-    new plyr('#audio-player', { controls });
+    // eslint-disable-next-line no-unused-vars
+    const audioPlayer = new Plyr('#audio-player', { controls });
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdate(prevProps) {
+    const audioPlayer = document.querySelector('#audio-player');
     const { player } = this.props;
-    if (player.isPlaying !== nextProps.player.isPlaying) {
-      return true;
-    }
-    // no re-rendering is required
-    return false;
-  }
-
-  componentDidUpdate() {
-    const { player } = this.props;
-    const audio = document.querySelector('#audio-player');
-    if (player.isPlaying) {
-      audio.play();
-    } else {
-      audio.pause();
+    // Switch song when a new videoId is given
+    if (prevProps.player.videoId !== player.videoId) {
+      audioPlayer.play();
     }
   }
 
   togglePlayPause() {
-    const { player, playConnect, pauseConnect } = this.props;
-    if (player.isPlaying) {
-      pauseConnect();
-    } else if (player.videoId !== 0) {
-      playConnect(player.videoId);
+    const audioPlayer = document.querySelector('#audio-player');
+    const { isPlaying } = this.state;
+    if (isPlaying) {
+      audioPlayer.pause();
+    } else {
+      audioPlayer.play();
     }
   }
 
   previousSong() {
-    const {
-      player,
-      playConnect,
-      previousSongConnect,
-      updateNowPlayingTitleConnect,
-      queue,
-    } = this.props;
+    const { player, previousSongConnect } = this.props;
     if (player.currentSongIndex > 0) {
-      previousSongConnect();
-      playConnect(queue[player.currentSongIndex].videoId);
-      updateNowPlayingTitleConnect(queue[player.currentSongIndex].title);
+      const { videoId, title } = player.queue[player.currentSongIndex - 1];
+      previousSongConnect(videoId, title);
     }
   }
 
   nextSong() {
-    const {
-      playConnect,
-      queue,
-      player,
-      nextSongConnect,
-      updateNowPlayingTitleConnect,
-    } = this.props;
-    if (queue.length > 0 && player.currentSongIndex + 1 !== queue.length) {
-      nextSongConnect();
-      playConnect(queue[player.currentSongIndex].videoId);
-      updateNowPlayingTitleConnect(queue[player.currentSongIndex].title);
+    const { player, nextSongConnect } = this.props;
+    if (player.queue.length - 1 >= player.currentSongIndex) {
+      const { videoId, title } = player.queue[player.currentSongIndex + 1];
+      nextSongConnect(videoId, title);
     }
   }
 
   render() {
-    const {
-      player, queue, playConnect, pauseConnect,
-    } = this.props;
+    const { player } = this.props;
+
+    const { isPlaying } = this.state;
     // Logic to disable previous and/or next buttons depending on the queue
     let previousDisabled = true;
     let nextDisabled = true;
-    if (player.currentSongIndex === -1) {
+    if (player.queue.length === 0) {
       previousDisabled = true;
       nextDisabled = true;
     }
     if (player.currentSongIndex > 0) {
       previousDisabled = false;
     }
-    if (queue.length > 0 && player.currentSongIndex + 1 !== queue.length) {
+    if (player.queue.length - 1 > player.currentSongIndex) {
       nextDisabled = false;
     }
     // Logic to determine which icon is shown based on whether music is playing or not
     let playPauseIcon;
-    if (player.isPlaying) {
+    if (isPlaying) {
       playPauseIcon = <FontAwesomeIcon icon="pause" size="2x" fixedWidth />;
     } else {
       playPauseIcon = <FontAwesomeIcon icon="play" size="2x" fixedWidth />;
@@ -221,9 +195,9 @@ class Player extends Component {
         <audio
           id="audio-player"
           src={`/api/play/${player.videoId}`}
-          onPlay={() => playConnect(player.videoId)}
-          onPause={() => pauseConnect()}
-          preload="none"
+          onPlay={() => this.setState({ isPlaying: true })}
+          onPause={() => this.setState({ isPlaying: false })}
+          // preload="none"
         />
       </PlayerContainer>
     );
@@ -231,14 +205,10 @@ class Player extends Component {
 }
 
 const mapStateToProps = state => ({
-  queue: state.queue,
   player: state.player,
 });
 
 const mapDispatchToProps = {
-  playConnect: play,
-  pauseConnect: pause,
-  updateNowPlayingTitleConnect: updateNowPlayingTitle,
   previousSongConnect: previousSong,
   nextSongConnect: nextSong,
 };

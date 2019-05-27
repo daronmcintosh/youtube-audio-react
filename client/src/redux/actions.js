@@ -1,9 +1,8 @@
 import {
   SET_SEARCH_TERM,
   ADD_TO_QUEUE,
+  PLAY_NEXT,
   PLAY,
-  PAUSE,
-  UPDATE_NOW_PLAYING_TITLE,
   PREVIOUS_SONG,
   NEXT_SONG,
 } from './actionTypes';
@@ -19,24 +18,26 @@ export const addToQueue = (videoId, title) => ({
   title,
 });
 
-export const play = videoId => ({
-  type: PLAY,
+export const playNext = (videoId, title) => ({
+  type: PLAY_NEXT,
   videoId,
-});
-
-export const pause = () => ({
-  type: PAUSE,
-});
-
-export const updateNowPlayingTitle = title => ({
-  type: UPDATE_NOW_PLAYING_TITLE,
   title,
 });
 
-export const previousSong = () => ({
-  type: PREVIOUS_SONG,
+export const play = (videoId, title) => ({
+  type: PLAY,
+  videoId,
+  title,
 });
 
-export const nextSong = () => ({
+export const nextSong = (videoId, title) => ({
   type: NEXT_SONG,
+  videoId,
+  title,
+});
+
+export const previousSong = (videoId, title) => ({
+  type: PREVIOUS_SONG,
+  videoId,
+  title,
 });
