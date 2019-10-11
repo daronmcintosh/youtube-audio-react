@@ -46,6 +46,7 @@ youtube-audio-react:
       ✔ Cache the trending page and refresh the cache every 24 hours @done(19-05-18 21:47)
       ☐ Figure out a way to cache the search results since that counts more towards the quota.
         If it is hard to cache search results, disable search when quota has been reach and have users rely on their playlists
+      ☐ Look into switching to https://github.com/TimeForANinja/node-ytsr
     ☐ Check to ensure all the propTypes hold
     ☐ Add form validation to search
 

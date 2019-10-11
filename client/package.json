@@ -3,20 +3,20 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.18",
-    "@fortawesome/free-solid-svg-icons": "^5.8.2",
-    "@fortawesome/react-fontawesome": "0.1.4",
-    "axios": "^0.18.0",
-    "plyr": "^3.5.4",
+    "@fortawesome/fontawesome-svg-core": "^1.2.25",
+    "@fortawesome/free-solid-svg-icons": "^5.11.2",
+    "@fortawesome/react-fontawesome": "^0.1.6",
+    "axios": "^0.19.0",
+    "plyr": "^3.5.6",
     "prop-types": "^15.7.2",
-    "react": "^16.8.6",
+    "react": "^16.10.2",
     "react-contextmenu": "^2.11.0",
-    "react-dom": "^16.8.6",
-    "react-redux": "^7.0.3",
-    "react-router-dom": "^5.0.0",
-    "react-scripts": "^3.0.1",
-    "redux": "^4.0.1",
-    "styled-components": "^4.2.0"
+    "react-dom": "^16.10.2",
+    "react-redux": "^7.1.1",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "^3.2.0",
+    "redux": "^4.0.4",
+    "styled-components": "^4.4.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -24,7 +24,9 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "typescript": "^3.6.4"
+  },
   "proxy": "http://localhost:3001",
   "homepage": "https://audio-youtube-react.herokuapp.com/",
   "browserslist": {
