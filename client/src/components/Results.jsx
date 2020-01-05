@@ -63,8 +63,9 @@ const SearchResultImg = styled.img`
     margin-bottom: -30px;
   }
 
-  ${props => props.circular
-    && css`
+  ${props =>
+    props.circular &&
+    css`
       width: 200px !important;
       height: 200px !important;
       border-radius: 50% !important;
@@ -117,19 +118,13 @@ const SearchResultDescription = styled.div`
 `;
 
 class Results extends Component {
-  static propTypes = {
-    addToQueueConnect: PropTypes.func.isRequired,
-    playConnect: PropTypes.func.isRequired,
-    searchTerm: PropTypes.string.isRequired,
-    playNextConnect: PropTypes.func.isRequired,
-  };
-
   constructor(props) {
     super(props);
     this.state = { isLoaded: false, error: null, searchResults: [] };
     this.handleLinkClick = this.handleLinkClick.bind(this);
     this.addSongToQueue = this.addSongToQueue.bind(this);
     this.fetchResults = this.fetchResults.bind(this);
+    this.playSongNext = this.playSongNext.bind(this);
   }
 
   componentDidMount() {
@@ -146,11 +141,11 @@ class Results extends Component {
 
   fetchResults(searchTerm) {
     axios
-      .get(`/results?searchQuery=${searchTerm}`)
-      .then((result) => {
+      .get(`/api/results?searchQuery=${searchTerm}`)
+      .then(result => {
         this.setState({ isLoaded: true, searchResults: result.data });
       })
-      .catch((err) => {
+      .catch(err => {
         this.setState({ isLoaded: true, error: err });
       });
   }
@@ -202,13 +197,22 @@ class Results extends Component {
                   className={`search-result ${result.kind}`}
                   data-videoid={result.id}
                   data-videotitle={result.title}
-                  onClick={() => this.handleLinkClick(result.id, result.title, result.kind)}
+                  onClick={() =>
+                    this.handleLinkClick(result.id, result.title, result.kind)
+                  }
                 >
                   <ImageWrapper className="search-result-img-wrapper">
                     {result.kind.includes('channel') ? (
-                      <SearchResultImg className="search-result-img" circular src={result.imgSrc} />
+                      <SearchResultImg
+                        className="search-result-img"
+                        circular
+                        src={result.imgSrc}
+                      />
                     ) : (
-                      <SearchResultImg className="search-result-img" src={result.imgSrc} />
+                      <SearchResultImg
+                        className="search-result-img"
+                        src={result.imgSrc}
+                      />
                     )}
                   </ImageWrapper>
                   <SearchResultInfo className="search-result-info">
@@ -238,17 +242,21 @@ class Results extends Component {
   }
 }
 
+Results.propTypes = {
+  addToQueueConnect: PropTypes.func.isRequired,
+  playConnect: PropTypes.func.isRequired,
+  searchTerm: PropTypes.string.isRequired,
+  playNextConnect: PropTypes.func.isRequired
+};
+
 const mapStateToProps = state => ({
-  searchTerm: state.searchTerm,
+  searchTerm: state.searchTerm
 });
 
 const mapDispatchToProps = {
   addToQueueConnect: addToQueue,
   playConnect: play,
-  playNextConnect: playNext,
+  playNextConnect: playNext
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Results);
+export default connect(mapStateToProps, mapDispatchToProps)(Results);

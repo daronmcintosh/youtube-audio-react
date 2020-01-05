@@ -5,7 +5,7 @@ import {
   faPlay,
   faSearch,
   faStepBackward,
-  faStepForward,
+  faStepForward
 } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';

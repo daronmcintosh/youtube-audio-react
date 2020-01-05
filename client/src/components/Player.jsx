@@ -79,23 +79,14 @@ const FontAwesomeButton = styled.button`
   font: inherit;
   cursor: pointer;
   outline: inherit;
-  ${props => props.disabled
-    && css`
+  ${props =>
+    props.disabled &&
+    css`
       color: red !important;
     `};
 `;
 
 class Player extends Component {
-  static propTypes = {
-    player: PropTypes.shape({
-      videoId: PropTypes.string.isRequired,
-      title: PropTypes.string.isRequired,
-      queue: PropTypes.array.isRequired,
-    }).isRequired,
-    nextSongConnect: PropTypes.func.isRequired,
-    previousSongConnect: PropTypes.func.isRequired,
-  };
-
   constructor(props) {
     super(props);
     this.togglePlayPause = this.togglePlayPause.bind(this);
@@ -181,7 +172,10 @@ class Player extends Component {
           >
             <FontAwesomeIcon icon="step-backward" size="2x" />
           </FontAwesomeButton>
-          <FontAwesomeButton className="font-awesome-button" onClick={this.togglePlayPause}>
+          <FontAwesomeButton
+            className="font-awesome-button"
+            onClick={this.togglePlayPause}
+          >
             {playPauseIcon}
           </FontAwesomeButton>
           <FontAwesomeButton
@@ -204,16 +198,24 @@ class Player extends Component {
   }
 }
 
+Player.propTypes = {
+  player: PropTypes.shape({
+    videoId: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    queue: PropTypes.array.isRequired,
+    currentSongIndex: PropTypes.number.isRequired
+  }).isRequired,
+  nextSongConnect: PropTypes.func.isRequired,
+  previousSongConnect: PropTypes.func.isRequired
+};
+
 const mapStateToProps = state => ({
-  player: state.player,
+  player: state.player
 });
 
 const mapDispatchToProps = {
   previousSongConnect: previousSong,
-  nextSongConnect: nextSong,
+  nextSongConnect: nextSong
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Player);
+export default connect(mapStateToProps, mapDispatchToProps)(Player);

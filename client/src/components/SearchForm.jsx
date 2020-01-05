@@ -28,14 +28,6 @@ const SearchButton = styled.button`
 `;
 
 class SearchForm extends Component {
-  static propTypes = {
-    setSearchTermConnect: PropTypes.func.isRequired,
-    history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
-    location: PropTypes.shape({
-      search: PropTypes.string.isRequired,
-    }).isRequired,
-  };
-
   constructor(props) {
     super(props);
     this.state = { searchTerm: '' };
@@ -44,10 +36,11 @@ class SearchForm extends Component {
   }
 
   componentDidMount() {
-    const { location } = this.props;
+    const { location, setSearchTermConnect } = this.props;
     // Set the text in the search box based on the location
     if (location.search !== '') {
-      const term = location.search.split('=')[1];
+      const term = decodeURIComponent(location.search.split('=')[1]);
+      setSearchTermConnect(term); // set search term when the component mounts
       this.setState({ searchTerm: term });
     }
   }
@@ -57,7 +50,7 @@ class SearchForm extends Component {
     const { searchTerm } = this.state;
     event.preventDefault();
     history.push(`/results?searchQuery=${searchTerm}`);
-    setSearchTermConnect(searchTerm);
+    setSearchTermConnect(searchTerm); // set search term when the search button is clicked
   }
 
   handleChange(event) {
@@ -86,12 +79,15 @@ class SearchForm extends Component {
 
 SearchForm.propTypes = {
   setSearchTermConnect: PropTypes.func.isRequired,
+  history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
+  location: PropTypes.shape({
+    search: PropTypes.string.isRequired
+  }).isRequired
+};
+
+SearchForm.propTypes = {
+  setSearchTermConnect: PropTypes.func.isRequired
 };
 const mapDispatchToProps = { setSearchTermConnect: setSearchTerm };
 
-export default withRouter(
-  connect(
-    null,
-    mapDispatchToProps,
-  )(SearchForm),
-);
+export default withRouter(connect(null, mapDispatchToProps)(SearchForm));

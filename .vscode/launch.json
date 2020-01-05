@@ -34,7 +34,10 @@
       "request": "launch",
       "name": "Debug Server/Client",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run-script", "debug"],
+      "runtimeArgs": [
+        "run-script",
+        "debug"
+      ],
       "port": 9229,
       "restart": true,
       "console": "integratedTerminal",
@@ -49,7 +52,10 @@
   "compounds": [
     {
       "name": "Debug Server/Client v2",
-      "configurations": ["Debug Server", "Debug Client"]
+      "configurations": [
+        "Debug Server",
+        "Debug Client"
+      ]
     }
   ]
 }

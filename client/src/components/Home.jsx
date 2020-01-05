@@ -79,12 +79,6 @@ const TrendingVideoTitle = styled.div`
 `;
 
 class Home extends Component {
-  static propTypes = {
-    addToQueueConnect: PropTypes.func.isRequired,
-    playConnect: PropTypes.func.isRequired,
-    playNextConnect: PropTypes.func.isRequired,
-  };
-
   constructor(props) {
     super(props);
     this.state = { isLoaded: false, error: null, trendingVideos: [] };
@@ -95,11 +89,11 @@ class Home extends Component {
 
   componentDidMount() {
     axios
-      .get('/trending')
-      .then((result) => {
+      .get('/api/trending')
+      .then(result => {
         this.setState({ isLoaded: true, trendingVideos: result.data });
       })
-      .catch((err) => {
+      .catch(err => {
         this.setState({ isLoaded: true, error: err });
       });
   }
@@ -147,7 +141,10 @@ class Home extends Component {
                   data-videotitle={video.title}
                   onClick={() => this.playSong(video.id, video.title)}
                 >
-                  <TrendingVideoImg className="trending-video-img" src={video.imgSrc} />
+                  <TrendingVideoImg
+                    className="trending-video-img"
+                    src={video.imgSrc}
+                  />
                   <TrendingVideoTitle className="trending-video-title">
                     {video.title}
                   </TrendingVideoTitle>
@@ -165,13 +162,16 @@ class Home extends Component {
   }
 }
 
+Home.propTypes = {
+  addToQueueConnect: PropTypes.func.isRequired,
+  playConnect: PropTypes.func.isRequired,
+  playNextConnect: PropTypes.func.isRequired
+};
+
 const mapDispatchToProps = {
   addToQueueConnect: addToQueue,
   playConnect: play,
-  playNextConnect: playNext,
+  playNextConnect: playNext
 };
 
-export default connect(
-  null,
-  mapDispatchToProps,
-)(Home);
+export default connect(null, mapDispatchToProps)(Home);

@@ -33,10 +33,16 @@ youtube-audio-react:
       Causes the web page to slow down drastically until refresh
     ☐ Fix this:Uncaught (in promise) DOMException: The play() request was interrupted by a new load request.
       It happens when you skip a track while the current is still loading
-    ☐ HPE_INVALID_CONSTANT causes ERR_CONTENT_LENGTH_MISMATCHED or vice versa.
+    ✔ Fix HPE_INVALID_CONSTANT @done(20-01-05 13:30)
+      HPE_INVALID_CONSTANT - This was caused by setting content-length headers for live streams
+    ☐ Fix ERR_CONTENT_LENGTH_MISMATCHED
+      This can't be easily fixed because the content-length has to be calculated since the content is being
+      converted and streamed as the user requests it(file is never stored). Only fix would be to catch errors like this and not print
+      them to browser console.
 
   Enhancements:
     ✔ Everything that gets plays has to go through the queue first @done(19-05-26 21:54)
+    ☐ Switch to a React based audio player instead of using plyr.
     ☐ Clean up ffmpeg processes that are not in use(socket.io)
     ☐ Check all dependencies to make sure they are being used and needed(script tags included)
     ☐ Update all dependencies to the latest versions
@@ -52,6 +58,7 @@ youtube-audio-react:
 
   Development:
     ☐ Look into the impack of using async await on performance
+    ☐ Move all eslint and other packages that are only relevant to the React client to the client's package.json
     ☐ Update README's
     ☐ Update heroku to the new stack(heroku-18) OR use TravisCI and docker containers to deploy to heroku
     ✔ Improve how 'Debug Client' works @done(19-05-17 14:08)

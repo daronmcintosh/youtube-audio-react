@@ -13,7 +13,7 @@ function Error(props) {
 }
 
 Error.propTypes = {
-  message: PropTypes.string.isRequired,
+  message: PropTypes.string.isRequired
 };
 
 export default Error;

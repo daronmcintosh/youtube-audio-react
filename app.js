@@ -29,7 +29,7 @@ const cacheMiddleware = duration => (req, res, next) => {
     res.send(cachedBody);
   } else {
     res.sendResponse = res.send;
-    res.send = (body) => {
+    res.send = body => {
       cache.put(key, body, duration * 1000);
       res.sendResponse(body);
     };
@@ -43,52 +43,59 @@ app.get('/api/play/:videoId', (req, res, next) => {
   const requestUrl = `https://www.youtube.com/watch?v=${videoId}`;
   apiRequest
     .getDuration(videoId)
-    .then((duration) => {
+    .then(duration => {
       const bitrate = req.body.bitrate || 128;
       const ratio = 0.0234353085554361;
-      const size = parseInt(((bitrate - bitrate * ratio) / 8) * 1024 * duration, 10);
-      res.set({
-        'Content-Length': size,
-        'Content-Type': 'audio/mpeg',
-        'Accept-Ranges': 'bytes',
-      });
+      const size = parseInt(
+        ((bitrate - bitrate * ratio) / 8) * 1024 * duration,
+        10
+      );
+
+      // don't set content-length header for livestreams
+      if (duration !== 0) {
+        res.set({
+          'Content-Length': size,
+          'Content-Type': 'audio/mpeg',
+          'Accept-Ranges': 'bytes'
+        });
+      }
 
       const streamPromise = youtubeAudioStream(requestUrl);
       return streamPromise;
     })
-    .then((stream) => {
-      // We want to remove all the previous listeners before registering new ones
+    .then(stream => {
+      // remove all the previous listeners before registering new ones
       stream.emitter.removeAllListeners('error');
-      stream.emitter.on('error', (err) => {
+      stream.emitter.on('error', err => {
         next(err);
       });
       stream.pipe(res);
     })
-    .catch((err) => {
+    .catch(err => {
       next(err);
     });
 });
 
 // Search Route - cache response for 24hrs
-app.get('/results', cacheMiddleware(86400), (req, res, next) => {
+app.get('/api/results', cacheMiddleware(86400), (req, res, next) => {
   apiRequest
     .buildSearch(req.query.searchQuery)
-    .then((searchResults) => {
+    .then(searchResults => {
       res.json(searchResults);
     })
-    .catch((err) => {
+    .catch(err => {
       next(err);
     });
 });
 
 // Trending Route - caches response for 24hrs
-app.get('/trending', cacheMiddleware(86400), (req, res, next) => {
+app.get('/api/trending', cacheMiddleware(86400), (req, res, next) => {
   apiRequest
     .buildTrendingVideos()
-    .then((results) => {
+    .then(results => {
       res.json(results);
     })
-    .catch((err) => {
+    .catch(err => {
       next(err);
     });
 });
