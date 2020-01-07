@@ -16,7 +16,7 @@ const app = express();
 
 app.use(helmet());
 app.use(cors());
-app.use(sslRedirect());
+// app.use(sslRedirect());
 app.use(bodyParser.json());
 app.use(morgan('dev'));
 app.use(express.static(path.join(__dirname, 'client/build')));
@@ -39,6 +39,7 @@ const cacheMiddleware = duration => (req, res, next) => {
 
 // Audio Route
 app.get('/api/play/:videoId', (req, res, next) => {
+  log.warn('AUDIO ROUTE HIT');
   const { videoId } = req.params;
   const requestUrl = `https://www.youtube.com/watch?v=${videoId}`;
   apiRequest
@@ -51,6 +52,7 @@ app.get('/api/play/:videoId', (req, res, next) => {
         10
       );
 
+      log.warn(`DURATION IS ${duration}`);
       // don't set content-length header for livestreams
       if (duration !== 0) {
         res.set({
@@ -69,9 +71,11 @@ app.get('/api/play/:videoId', (req, res, next) => {
       stream.emitter.on('error', err => {
         next(err);
       });
+      log.warn(`HIT PROMISE RESOLVED`);
       stream.pipe(res);
     })
     .catch(err => {
+      log.warn(`HIT PROMISE REJECTED`);
       next(err);
     });
 });
